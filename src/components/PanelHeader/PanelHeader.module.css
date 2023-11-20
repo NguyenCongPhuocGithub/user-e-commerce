@@ -1,0 +1,90 @@
+
+.wrapper_panel{
+    position: relative;
+    border-top: 10px solid #ffc522 ;
+}
+/* Config css header_panel */
+.header_panel{
+    position: relative;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 30px;
+    background-color: #ffc522;
+    top: -5px;
+    left: 50%;
+    width: auto;
+    height: 30px;
+    z-index: 10;
+}
+
+.header_panel::before{
+    content: '';
+    height: 30px;
+    width: 100px;
+    background: url(https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/en_US/images/bg-header.png) center no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    display: block;
+}
+
+  
+.header_panel::after {
+    content: '';
+    flex-grow: 1;
+}
+/* End build css header_panel */
+
+
+/* Config css language */
+.language{
+    display: flex;
+}
+
+.language_original, .language_foreign {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.language_original{
+    margin-right: 10px;
+    color: #e31837;
+}
+
+.language_foreign{
+    margin-left: 10px;
+}
+
+.img{
+    width: 16px;
+    height: 16px;
+}
+
+/* End config css language */
+
+/* Config css switcher */
+.switcher{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+/* End config css switcher */
+
+/* Config css header_register */
+.header_register{
+    display: flex;
+    column-gap: 8px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.wrap_register{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+
+/* End config css header_register */

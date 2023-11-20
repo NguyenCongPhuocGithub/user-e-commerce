@@ -1,0 +1,9 @@
+.page_header{
+    background-color: #e31837;
+}
+
+.header_content{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
