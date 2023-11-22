@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import moment from "moment";
 
-import styles from "./Profile.module.css";
+import styles from "../styles/Profile.module.css";
 import axiosClient from "@/libraries/axiosClient";
 import axios from "axios";
 import withTokenCheckComponent from "../../../middleware/withTokenCheckComponent";
@@ -52,19 +52,42 @@ function Profile() {
 
       birthday: yup.date().nullable(),
 
-      provinceCode: yup.number(),
+      provinceCode: yup.number().required("Tỉnh: Không thể bỏ trống"),
 
       provinceName: yup
         .string()
         .max(50, "provinceName: cannot exceed 50 characters"),
 
-      districtCode: yup.number(),
+      districtCode: yup
+        .number()
+        .required("Quận: Không thể bỏ trống")
+        .test(
+          "districtCode type",
+          "Mã quận: vui lòng chọn mã tỉnh trước",
+          (value, context) => {
+            if (context.parent.provinceCode) {
+              return true;
+            }
+          }
+        ),
 
       districtName: yup
         .string()
         .max(50, "districtName: cannot exceed 50 characters"),
 
-      wardCode: yup.string().max(500, "wardCode: cannot exceed 50 characters"),
+      wardCode: yup
+        .string()
+        .max(500, "wardCode: cannot exceed 50 characters")
+        .required("Phường: Không thể bỏ trống")
+        .test(
+          "wardCode type",
+          "Mã phường: vui lòng chọn mã quận trước",
+          (value, context) => {
+            if (context.parent.districtCode) {
+              return true;
+            }
+          }
+        ),
 
       wardName: yup.string().max(500, "wardName: cannot exceed 50 characters"),
 
@@ -102,16 +125,18 @@ function Profile() {
 
   const getDistrict = useCallback(async (valuesProvinceCode) => {
     try {
-      const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${valuesProvinceCode}`;
-      const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
+      if (valuesProvinceCode !== 0) {
+        const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${valuesProvinceCode}`;
+        const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
 
-      const response = await axios.get(url, {
-        headers: {
-          token: token,
-        },
-      });
+        const response = await axios.get(url, {
+          headers: {
+            token: token,
+          },
+        });
 
-      setDistricts(response.data.data || []);
+        setDistricts(response.data.data || []);
+      }
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
@@ -119,16 +144,18 @@ function Profile() {
 
   const getWard = useCallback(async (valuesDistrictCode) => {
     try {
-      const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${valuesDistrictCode}`;
-      const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
+      if (valuesDistrictCode !== 0) {
+        const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${valuesDistrictCode}`;
+        const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
 
-      const response = await axios.get(url, {
-        headers: {
-          token: token,
-        },
-      });
+        const response = await axios.get(url, {
+          headers: {
+            token: token,
+          },
+        });
 
-      setWards(response.data.data || []);
+        setWards(response.data.data || []);
+      }
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
@@ -191,11 +218,14 @@ function Profile() {
   }, [validation.values.wardCode]);
 
   return (
-    <div>
-      <form onSubmit={validation.handleSubmit}>
-        <div>
-          <label>
-            Họ: 
+    <div className="flex items-center justify-center shadow-md bg-gray-100 py-8">
+      <form onSubmit={validation.handleSubmit} className="w-full max-w-sm px-4 bg-white p-6 rounded-lg">
+        <div className="mb-4">
+          <label
+            htmlFor="firstName"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Họ:
             <input
               type="text"
               placeholder="Vui lòng nhập thông tin họ"
@@ -203,14 +233,26 @@ function Profile() {
               value={validation.values.firstName}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.firstName && validation.touched.firstName
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
           </label>
+          {validation.errors.firstName && validation.touched.firstName && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.firstName}
+            </div>
+          )}
         </div>
-        {validation.errors.firstName && validation.touched.firstName && <div>{validation.errors.firstName}</div>}
 
-        <div>
-          <label>
-            Tên: 
+        <div className="mb-4">
+          <label
+            htmlFor="lastName"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Tên:
             <input
               type="text"
               placeholder="Vui lòng nhập thông tin tên"
@@ -218,14 +260,26 @@ function Profile() {
               value={validation.values.lastName}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.lastName && validation.touched.lastName
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
           </label>
+          {validation.errors.lastName && validation.touched.lastName && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.lastName}
+            </div>
+          )}
         </div>
-        {validation.errors.lastName && validation.touched.lastName && <div>{validation.errors.lastName}</div>}
 
-        <div>
-          <label>
-            Số điện thoại: 
+        <div className="mb-4">
+          <label
+            htmlFor="phoneNumber"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Số điện thoại:
             <input
               type="text"
               placeholder="Vui lòng nhập thông tin số điện thoại"
@@ -233,14 +287,26 @@ function Profile() {
               value={validation.values.phoneNumber}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.phoneNumber && validation.touched.phoneNumber
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
           </label>
+          {validation.errors.phoneNumber && validation.touched.phoneNumber && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.phoneNumber}
+            </div>
+          )}
         </div>
-        {validation.errors.phoneNumber && validation.touched.phoneNumber && <div>{validation.errors.phoneNumber}</div>}
 
-        <div>
-          <label>
-            Ngày sinh: 
+        <div className="mb-4">
+          <label
+            htmlFor="birthday"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Ngày sinh:
             <input
               type="date"
               placeholder="Vui lòng nhập thông tin ngày sinh"
@@ -248,19 +314,37 @@ function Profile() {
               value={formattedDate}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.birthday && validation.touched.birthday
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
           </label>
+          {validation.errors.birthday && validation.touched.birthday && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.birthday}
+            </div>
+          )}
         </div>
-        {validation.errors.birthday && validation.touched.birthday && <div>{validation.errors.birthday}</div>}
 
-        <div>
-          <label>
+        <div className="mb-4">
+          <label
+            htmlFor="provinceCode"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Tỉnh thành
             <select
               name="provinceCode"
               value={validation.values.provinceCode}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.provinceCode &&
+                validation.touched.provinceCode
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             >
               <option value="" label="Vui lòng chọn tỉnh thành"></option>
               {provinces &&
@@ -276,17 +360,31 @@ function Profile() {
                 })}
             </select>
           </label>
+          {validation.errors.provinceCode &&
+            validation.touched.provinceCode && (
+              <div className="text-red-500 text-xs italic">
+                {validation.errors.provinceCode}
+              </div>
+            )}
         </div>
-        {validation.errors.provinceCode && validation.touched.provinceCode && <div>{validation.errors.provinceCode}</div>}
 
-        <div>
-          <label>
+        <div className="mb-4">
+          <label
+            htmlFor="districtCode"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Quận
             <select
               name="districtCode"
               value={validation.values.districtCode}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.districtCode &&
+                validation.touched.districtCode
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             >
               <option value="" label="Vui lòng chọn quận "></option>
               {districts &&
@@ -302,17 +400,30 @@ function Profile() {
                 })}
             </select>
           </label>
+          {validation.errors.districtCode &&
+            validation.touched.districtCode && (
+              <div className="text-red-500 text-xs italic">
+                {validation.errors.districtCode}
+              </div>
+            )}
         </div>
-        {validation.errors.districtCode && validation.touched.districtCode && <div>{validation.errors.districtCode}</div>}
 
-        <div>
-          <label>
+        <div className="mb-4">
+          <label
+            htmlFor="wardCode"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Phường
             <select
               name="wardCode"
               value={validation.values.wardCode}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.wardCode && validation.touched.wardCode
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             >
               <option value="" label="Vui lòng chọn phường "></option>
               {wards &&
@@ -325,12 +436,19 @@ function Profile() {
                 })}
             </select>
           </label>
+          {validation.errors.wardCode && validation.touched.wardCode && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.wardCode}
+            </div>
+          )}
         </div>
-        {validation.errors.wardCode && validation.touched.wardCode && <div>{validation.errors.wardCode}</div>}
 
-        <div>
-          <label>
-            Địa chỉ: 
+        <div className="mb-4">
+          <label
+            htmlFor="address"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Địa chỉ:
             <input
               type="text"
               placeholder="Vui lòng nhập thông tin địa chỉ"
@@ -338,12 +456,26 @@ function Profile() {
               value={validation.values.address}
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
+              className={`${
+                validation.errors.address && validation.touched.address
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
           </label>
+          {validation.errors.address && validation.touched.address && (
+            <div className="text-red-500 text-xs italic">
+              {validation.errors.address}
+            </div>
+          )}
         </div>
-        {validation.errors.address && validation.touched.address && <div>{validation.errors.address}</div>}
 
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
+        >
+          Cập nhật thông tin
+        </button>
       </form>
     </div>
   );

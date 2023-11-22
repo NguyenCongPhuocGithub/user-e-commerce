@@ -47,9 +47,9 @@ function ChangePassword() {
           "newPassword type",
           "Mật khẩu mới: không khớp với mật khẩu cũ",
           (value, context) => {
-            if(context.parent.passwordOld){
+            if (context.parent.passwordOld) {
               return value !== context.parent.passwordOld;
-            };
+            }
           }
         )
         .min(8)
@@ -72,9 +72,9 @@ function ChangePassword() {
           "confirmPassword type",
           "Nhâp lại mật khẩu mới: không khớp với mật khẩu mới",
           (value, context) => {
-            if(context.parent.newPassword){
+            if (context.parent.newPassword) {
               return value === context.parent.newPassword;
-            };
+            }
           }
         )
         .min(8)
@@ -83,70 +83,94 @@ function ChangePassword() {
 
     onSubmit: async (values) => {
       try {
-          await axiosClient.patch(`/customers/changePassword`, values),
-          toast.success("Cập nhật mật khẩu thành công")  
+        await axiosClient.patch(`/customers/changePassword`, values),
+          toast.success("Cập nhật mật khẩu thành công");
       } catch (error) {
-          console.error(error);
-          toast.error("Cập nhật mật khẩu thất bại");
+        console.error(error);
+        toast.error("Cập nhật mật khẩu thất bại");
       }
     },
   });
 
   return (
-    <div>
-      <form onSubmit={validation.handleSubmit}>
-        <div>
-          <label>
+    <div className="flex items-center justify-center shadow-md bg-gray-100 py-8">
+      <form
+        onSubmit={validation.handleSubmit}
+        className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg"
+      >
+        <div className="mb-4">
+          <label htmlFor="passwordOld" className="block font-medium mb-1">
             Nhập mật khẩu cũ:
-            <input
-              type="text"
-              placeholder="Vui lòng nhập mật khẩu cũ"
-              name="passwordOld"
-              value={validation.values.passwordOld}
-              onChange={validation.handleChange}
-              onBlur={validation.handleBlur}
-            />
           </label>
+          <input
+            type="text"
+            id="passwordOld"
+            className="border border-gray-300 rounded px-3 py-2 w-full"
+            placeholder="Vui lòng nhập mật khẩu cũ"
+            name="passwordOld"
+            value={validation.values.passwordOld}
+            onChange={validation.handleChange}
+            onBlur={validation.handleBlur}
+            autoComplete="off" // Tắt gợi ý nhập
+          />
         </div>
         {validation.errors.passwordOld && validation.touched.passwordOld && (
-          <div>{validation.errors.passwordOld}</div>
+          <div className="text-red-500 mb-4">
+            {validation.errors.passwordOld}
+          </div>
         )}
 
-        <div>
-          <label>
+        <div className="mb-4">
+          <label htmlFor="newPassword" className="block font-medium mb-1">
             Mật khẩu mới:
-            <input
-              type="text"
-              placeholder="Vui lòng nhập mật khẩu mới"
-              name="newPassword"
-              value={validation.values.newPassword}
-              onChange={validation.handleChange}
-              onBlur={validation.handleBlur}
-            />
           </label>
+          <input
+            type="password" // Sử dụng type="password" để ẩn mật khẩu
+            id="newPassword"
+            className="border border-gray-300 rounded px-3 py-2 w-full"
+            placeholder="Vui lòng nhập mật khẩu mới"
+            name="newPassword"
+            value={validation.values.newPassword}
+            onChange={validation.handleChange}
+            onBlur={validation.handleBlur}
+            autoComplete="off" // Tắt gợi ý nhập
+          />
         </div>
         {validation.errors.newPassword && validation.touched.newPassword && (
-          <div>{validation.errors.newPassword}</div>
+          <div className="text-red-500 mb-4">
+            {validation.errors.newPassword}
+          </div>
         )}
 
-        <div>
-          <label>
+        <div className="mb-4">
+          <label htmlFor="confirmPassword" className="block font-medium mb-1">
             Nhập lại mật khẩu mới:
-            <input
-              type="text"
-              placeholder="Vui lòng nhập lại thông tin mới"
-              name="confirmPassword"
-              value={validation.values.confirmPassword}
-              onChange={validation.handleChange}
-              onBlur={validation.handleBlur}
-            />
           </label>
+          <input
+            type="password" // Sử dụng type="password" để ẩn mật khẩu
+            id="confirmPassword"
+            className="border border-gray-300 rounded px-3 py-2 w-full"
+            placeholder="Vui lòng nhập lại thông tin mới"
+            name="confirmPassword"
+            value={validation.values.confirmPassword}
+            onChange={validation.handleChange}
+            onBlur={validation.handleBlur}
+            autoComplete="off" // Tắt gợi ý nhập
+          />
         </div>
         {validation.errors.confirmPassword &&
           validation.touched.confirmPassword && (
-            <div>{validation.errors.confirmPassword}</div>
+            <div className="text-red-500 mb-4">
+              {validation.errors.confirmPassword}
+            </div>
           )}
-        <button type="submit">Submit</button>
+
+        <button
+          type="submit"
+          className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
+        >
+          Thay đổi mật khẩu
+        </button>
       </form>
     </div>
   );

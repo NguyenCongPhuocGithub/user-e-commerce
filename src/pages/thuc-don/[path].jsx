@@ -9,7 +9,6 @@ import axiosClient from "@/libraries/axiosClient";
 import ProductContent from "@/components/ProductContent";
 import styles from "../styles/thuc-don.module.css";
 import ModalCart from "@/components/ModalCart";
-import withTokenCheckFunction from "../../../middleware/WithTokenCheckFunction";
 
 function ProductList(props) {
   const { products } = props;
@@ -47,38 +46,43 @@ function ProductList(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {products && (
-        <main>
-          <div className={`container mx-auto`}>
-            <div className={`${styles.product_wrapper} `}>
-              <ul className={`${styles.product_list}`}>
-                {products.map((item) => (
-                  <ProductContent key={item._id} products={item} getCart = {getCart}/>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.minicart_wrapper}>
-              <div className={styles.minicart_content_trigger}>
+        <div className={`container mx-auto px-4 md:px-6 lg:px-8`}>
+          <div className={`${styles.product_wrapper} py-4 md:py-6 lg:py-8`}>
+            <ul
+              className={`${styles.product_list} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}
+            >
+              {products.map((item, index) => (
+                <ProductContent
+                  key={item._id}
+                  products={item}
+                  getCart={getCart}
+                  index={index}
+                />
+              ))}
+            </ul>
+          </div>
+          <div className={`${styles.minicart_wrapper} flex justify-end`}>
+              <div className={`${styles.minicart_content_trigger} fixed bottom-0 flex justify-center w-1/4 md:w-1/4 lg:w-1/5 py-2 px-3 bg-yellow-400 rounded-t-2xl`}>
                 <button
                   className={styles.minicart_icon}
                   onClick={handleGetCart}
                 >
                   <BsCart4 size="3rem" />
                 </button>
-                <span className={styles.subtotal}>
-                <span className={styles.productLength}>{cart.products && cart.products.length}</span>
+                <span className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}>
+                <span className={`${styles.productLength} w-full h-1/2 flex justify-center items-center rounded-full bg-red-700 text-white`}>{cart.products && cart.products.length}</span>
                 </span>
               </div>
             </div>
-            <ModalCart
-              open={open}
-              setOpen={setOpen}
-              products={products}
-              cart={cart}
-              setCart={setCart}
-              getCart={getCart}
-            />
-          </div>
-        </main>
+          <ModalCart
+            open={open}
+            setOpen={setOpen}
+            products={products}
+            cart={cart}
+            setCart={setCart}
+            getCart={getCart}
+          />
+        </div>
       )}
     </>
   );

@@ -3,7 +3,7 @@
     column-gap: 6px;
     background-color: #e31837;
     color: #fff;
-    align-items: end;
+    align-items: flex-end;
     text-align: center;
     padding: 10px;
     font-weight: 500;

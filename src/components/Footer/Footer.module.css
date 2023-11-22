@@ -27,7 +27,7 @@
 }
 
 .footer_text .footer_logo {
-    -webkit-box-pack: end;
+    -webkit-box-pack: flex-end;
     text-align: center;
     box-sizing: border-box;
     max-width: 100px;

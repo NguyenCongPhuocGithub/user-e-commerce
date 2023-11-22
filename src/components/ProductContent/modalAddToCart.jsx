@@ -116,13 +116,8 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                {/* <div className="sm:flex sm:items-start">
-              </div>
-            </div>
-          </div> */}
-              </div>
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full font-sans text-lg">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"></div>
               {/* Build form  */}
               <div className="flex items-center">
                 <div className="w-1/2">
@@ -132,21 +127,37 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
                     className="w-full rounded-lg"
                   />
                 </div>
-                <div className="w-1/2 p-4">
-                  <h2 className="text-2xl font-bold mb-4">{products.name}</h2>
-                  <div className="text-2x mb-4">{products.description}</div>
+                <div className="flex flex-col gap-y-4 w-1/2 p-4">
+                  <h2 className="text-xl text-center font-bold ">
+                    {products.name}
+                  </h2>
+                  <div className="text-base ">{products.description}</div>
                 </div>
               </div>
               {/* End build form */}
-              <div className="bg-gray-50  flex-col gap-x-5">
-                <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse items-center gap-x-5">
-                  <div className = "text-lg">
-                    {numeral(valueInput.quantity * products.price).format("0,05$")}
+              <div className="bg-gray-50 flex-col gap-y-2">
+                <div className="px-4 py-3 flex justify-start flex-row-reverse items-center gap-x-2">
+                  <div className="text-2xl font-bold flex items-center w-1/3 justify-center">
+                    {numeral(valueInput.quantity * products.price).format(
+                      "0,05$"
+                    )}
                   </div>
-                  <div className="flex items-center">
+                </div>
+                
+                <div className="flex flex-row-reverse items-center pr-5 pb-3 h-12">
+                  <button
+                    type="button"
+                    className="w-fit inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+                    onClick={withTokenCheckFunction(handleAddToCart)}
+                    disabled={isButtonDisabled}
+                  >
+                    Thêm vào giỏ hàng
+                  </button>
+
+                  <div className="flex items-center w-1/4 justify-center h-full">
                     <button
                       type="button"
-                      className="bg-gray-200 text-gray-700 px-3 py-1 rounded-l-full focus:outline-none"
+                      className="bg-gray-200 text-gray-700 hover:bg-gray-400 px-3 py-1 h-full rounded-l-full focus:outline-none flex items-center justify-center"
                       onClick={handleDecreaseQuantity}
                     >
                       -
@@ -156,27 +167,18 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
                       name="quantity"
                       value={valueInput.quantity}
                       onChange={handleInputChange}
-                      className="w-16 py-1 text-center bg-gray-100 "
+                      className=" w-1/3 px-3 py-2 h-full text-center bg-gray-100 "
                       // readOnly
                     />
                     <button
                       type="button"
-                      className="bg-gray-200 text-gray-700 px-3 py-1 rounded-r-full focus:outline-none"
+                      className="bg-gray-200 text-gray-700 hover:bg-gray-400 px-3 py-1 h-full rounded-r-full focus:outline-none flex items-center justify-center"
                       onClick={handleIncreaseQuantity}
                     >
                       +
                     </button>
                   </div>
-                </div>
-                <div className="sm:flex sm:flex-row-reverse items-center pr-5 pb-3">
-                  <button
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={withTokenCheckFunction(handleAddToCart)}
-                    disabled={isButtonDisabled}
-                  >
-                    Thêm vào giỏ hàng
-                  </button>
+
                 </div>
               </div>
             </div>

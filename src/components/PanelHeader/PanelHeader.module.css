@@ -5,7 +5,7 @@
 }
 /* Config css header_panel */
 .header_panel{
-    position: relative;
+    /* position: relative; */
     display: flex;
     text-align: left;
     align-items: center;

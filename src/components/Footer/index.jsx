@@ -35,12 +35,12 @@ function Footer() {
             <div className={`col-span-12 md:col-span-6 lg:col-span-3`}>
               <a href="tel:19001533">
                 <img
-                  class={styles.img_ship}
+                  className={styles.img_ship}
                   src="https://jollibee.com.vn/media/wysiwyg/delivery-lg_1.png"
                   alt="Jollibee giao hàng tận nơi"
                 />
               </a>
-              <ul class = {styles.list_page}>
+              <ul className = {styles.list_page}>
                 <li>
                   <a href="/">Liên hệ</a>
                 </li>
@@ -72,11 +72,11 @@ function Footer() {
               <div className = {styles.block_social}>
                 <a className = {styles.btn_icon} href="https://www.facebook.com/JollibeeVietnam" >
                   <img src="https://jollibee.com.vn/media/wysiwyg/icon-fb.png" alt="Facebook" />
-                  <span class="text">Facebook </span>
+                  <span className="text">Facebook </span>
                 </a>
                 <a className = {styles.btn_icon} href="mailto:jbvnfeedback@jollibee.com.vn">
                   <img src="https://jollibee.com.vn/media/wysiwyg/icon-mail.png" alt="Google mail"/>
-                  <span class="text">E-Mail</span>
+                  <span className="text">E-Mail</span>
                 </a>
               </div>
               <a href="http://online.gov.vn/Home/WebDetails/92800" target="_blank" rel="noopener">

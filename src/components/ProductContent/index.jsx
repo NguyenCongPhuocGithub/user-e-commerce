@@ -1,5 +1,5 @@
 import React from "react";
-import {useState } from 'react'
+import { useState } from "react";
 
 import styles from "./ProductContent.module.css";
 import Image from "next/image";
@@ -8,8 +8,7 @@ import numeral from "numeral";
 import "numeral/locales/vi";
 numeral.locale("vi");
 
-function ProductContent({ products, getCart }) {
-
+function ProductContent({ products, getCart, index }) {
   const [open, setOpen] = useState(false);
 
   const handleAddToCart = () => {
@@ -18,44 +17,57 @@ function ProductContent({ products, getCart }) {
 
   return (
     <>
-      <li className={styles.product_item}>
-        <div className={styles.product_item_info}>
-          <div className={styles.product_image_container}>
-            <div className={styles.product_image_wrapper}>
+      <li
+        className={`${styles.product_item} p-4 border border-dashed border-yellow-500`}
+      >
+        <div className={`${styles.product_item_info} flex flex-col gap-y-6`}>
+          <div className="flex justify-center items-center">
+            <div className={`${styles.product_image_wrapper} w-3/4 h-auto`}>
               <Image
                 width={200}
                 height={200}
                 src={products.media.coverImageUrl}
+                className="w-full"
               />
             </div>
-            <div className={styles.product_item_details}>
-              <strong className={styles.product_item_name}>
-                {products.name}
-              </strong>
-              <div className={styles.price_final_price}>
-                <span>{`${numeral(products.price).format("0,05$")}`}</span>
-                {products.discount !== 0 && products.discount ? (<div><span>{products.discount} %</span></div>) : null}
-              </div>
-
-              <div className={styles.product_item_inner}>
-                <div className={styles.product_item_actions}>
-                  <div className={styles.actions_primary}>
-                    <button
-                      type="submit"
-                      title="Đặt hàng"
-                      class="action_tocart"
-                      onClick={handleAddToCart}
-                    >
-                      <span>Đặt hàng</span>
-                    </button>
-                  </div>
+          </div>
+          <div
+            className={`${styles.product_item_details} flex flex-col gap-y-4 items-center font-lg font-bold font-sans text-center`}
+          >
+            <strong
+              className={`${styles.product_item_name} h-12 flex items-center`}
+            >
+              {products.name}
+            </strong>
+            <div
+              className={`${styles.price_final_price} text-2xl text-red-700 flex flex-col items-center justify-center h-20 w-full`}
+            >
+              <span>{`${numeral(products.price).format("0,05$")}`}</span>
+              {products.discount !== 0 && products.discount ? (
+                <div>
+                  <span>Giảm: {products.discount} %</span>
                 </div>
-              </div>
+              ) : null}
             </div>
+              <div className={`${styles.product_item_actions} w-2/4 h-auto`}>
+                <button
+                  type="submit"
+                  title="Đặt hàng"
+                  className="action_tocart bg-red-700 hover:bg-red-800 text-white font-semibold py-4 px-6 rounded-2xl transition duration-300 w-full text-xl"
+                  onClick={handleAddToCart}
+                >
+                  <span>Đặt hàng</span>
+                </button>
+              </div>
           </div>
         </div>
       </li>
-      <ModalAddToCart open={open} setOpen={setOpen} products={products} getCart = {getCart}/>
+      <ModalAddToCart
+        open={open}
+        setOpen={setOpen}
+        products={products}
+        getCart={getCart}
+      />
     </>
   );
 }

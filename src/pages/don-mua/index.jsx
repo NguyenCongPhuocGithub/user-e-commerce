@@ -92,31 +92,31 @@ function PurchaseOrder() {
   }, [getOrderMe]);
 
   return (
-    <div>
-      <h3 className="text-2xl font-bold mb-4 text-center">
-        Thông tin đơn hàng
-      </h3>
+    <div className={`p-4 md:p-6 lg:p-6`}>
+      <h3 className="text-2xl font-bold text-center p-6">Đơn hàng của tôi</h3>
       <div className="overflow-x-auto text-center">
-        <table className="min-w-full border border-gray-300">
+        <table className=" min-w-full border border-gray-300">
           <thead>
             <tr>
-              <th className="border-b-2 border-gray-300 p-2">Stt</th>
+              <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">Stt</th>
               <th className="border-b-2 border-gray-300 p-2">Mã đơn hàng</th>
               <th className="border-b-2 border-gray-300 p-2">Trạng thái</th>
               <th className="border-b-2 border-gray-300 p-2">Hủy đơn hàng</th>
-              <th className="border-b-2 border-gray-300 p-2">Loại đơn</th>
-              <th className="border-b-2 border-gray-300 p-2">Thanh toán</th>
-              <th className="border-b-2 border-gray-300 p-2">Ngày tạo đơn</th>
-              <th className="border-b-2 border-gray-300 p-2">
+              <th className="border-b-2 border-gray-300 p-2 hidden md:hidden lg:table-cell">
+                Loại đơn
+              </th>
+              <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">Ngày tạo đơn</th>
+              <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
                 Ngày dự kiến giao hàng
               </th>
+              <th className="border-b-2 border-gray-300 p-2">Thanh toán</th>
               {/* Thêm tiêu đề cho các cột khác của đơn hàng */}
             </tr>
           </thead>
           <tbody>
             {orders.map((order, index) => (
               <tr key={order._id}>
-                <td className="border-b border-gray-300 p-2">
+                <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
                   <span>
                     {index + 1 + pagination.pageSize * (pagination.page - 1)}
                   </span>
@@ -126,21 +126,37 @@ function PurchaseOrder() {
                     {order._id}
                   </Link>
                 </td>
+
                 <td className="border-b border-gray-300 p-2">
-                  <span>{statusMapping[order.status]}</span>
+                  <span
+                    className={`inline-block px-2 py-1 w-full rounded text-white ${
+                      order.status === "PLACED"
+                        ? "bg-blue-500"
+                        : order.status === "COMPLETED"
+                        ? "bg-green-500"
+                        : order.status === "DELIVERING"
+                        ? "bg-orange-500"
+                        : order.status === "PREPARED"
+                        ? "bg-yellow-500"
+                        : "bg-red-500"
+                    }`}
+                  >
+                    {statusMapping[order.status]}
+                  </span>
                 </td>
+
                 <td className="border-b border-gray-300 p-2 ">
                   {order.status === "PLACED" || order.status === "PREPARING" ? (
                     <button
-                      className="flex-col justify-center"
+                      className="flex-col justify-center hover:bg-gray-400 rounded-md"
                       onClick={() => handleCancelOrderDetail(order)}
                     >
                       <CiTrash size="20px" />
                     </button>
                   ) : null}
                 </td>
-                <td className="border-b border-gray-300 p-2">
-                  <td className="border-gray-300 p-2">
+                <td className="border-b border-gray-300 p-2 hidden md:hidden lg:table-cell">
+                  <td className="border-gray-300 p-2 flex justify-center">
                     {order.isOnline && order.isOnline === true ? (
                       <span>Trực tuyến</span>
                     ) : (
@@ -148,8 +164,30 @@ function PurchaseOrder() {
                     )}
                   </td>
                 </td>
-                <td className="border-b border-gray-300 p-2">
-                  <span>{`${numeral(
+
+                <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                  <span>{`${new Date(
+                    order.createdDate
+                  ).toLocaleDateString()}`}</span>
+                </td>
+                {order.status === "COMPLETED" ? (
+                  <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                    <span>{`${new Date(
+                      order.updatedAt
+                    ).toLocaleDateString()}`}</span>
+                  </td>
+                ) : order.status === "REJECTED" || order.status === "FLAKER" ? (
+                  <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">_____</td>
+                ) : (
+                  <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                    <span>{`${new Date(
+                      order.shippedDate
+                    ).toLocaleDateString()}`}</span>
+                  </td>
+                )}
+
+                <td className="border-b border-gray-300 px-4 py-2">
+                  <span className="flex justify-end">{`${numeral(
                     order.productList.reduce(
                       (acc, product) =>
                         acc +
@@ -160,97 +198,66 @@ function PurchaseOrder() {
                     ) + order.totalFee
                   ).format("0,05$")}`}</span>
                 </td>
-                <td className="border-b border-gray-300 p-2">
-                  <span>{`${new Date(
-                    order.createdDate
-                  ).toLocaleDateString()}`}</span>
-                </td>
-                {order.status === "COMPLETED" ? (
-                  <td className="border-b border-gray-300 p-2">
-                    <span>{`${new Date(
-                      order.updatedAt
-                    ).toLocaleDateString()}`}</span>
-                  </td>
-                ) : order.status === "REJECTED" || order.status === "FLAKER" ? (
-                  <td className="border-b border-gray-300 p-2">_____</td>
-                ) : (
-                  <td className="border-b border-gray-300 p-2">
-                    <span>{`${new Date(
-                      order.shippedDate
-                    ).toLocaleDateString()}`}</span>
-                  </td>
-                )}
-
-                {/* {order.shippedDate ? (
-                  <td className="border-b border-gray-300 p-2">
-                    <span>{`${new Date(
-                      order.shippedDate
-                    ).toLocaleDateString()}`}</span>
-                  </td>
-                ) : (
-                  <td className="border-b border-gray-300 p-2"></td>
-                )} */}
 
                 {/* Hiển thị các thông tin khác của đơn hàng */}
               </tr>
             ))}
           </tbody>
         </table>
-        {/* Build UI pagination */}
-        <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-          <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm text-gray-700">
-                Showing{" "}
-                <span className="font-medium">
-                  {(pagination.page - 1) * pagination.pageSize + 1}
-                </span>{" "}
-                to{" "}
-                <span className="font-medium">
-                  {Math.min(
-                    pagination.page * pagination.pageSize,
-                    pagination.total
-                  )}
-                </span>{" "}
-                of <span className="font-medium">{pagination.total}</span>{" "}
-                results
-              </p>
-            </div>
-            <div>
-              <nav
-                className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                aria-label="Pagination"
+      </div>
+
+  {/* Build UI pagination */}
+      <div className="flex flex-col items-center gap-y-3 border-t border-gray-200 bg-white px-4 py-3">
+          <div>
+            <p className="text-sm text-gray-700">
+              Showing{" "}
+              <span className="font-medium">
+                {(pagination.page - 1) * pagination.pageSize + 1}
+              </span>{" "}
+              to{" "}
+              <span className="font-medium">
+                {Math.min(
+                  pagination.page * pagination.pageSize,
+                  pagination.total
+                )}
+              </span>{" "}
+              of <span className="font-medium">{pagination.total}</span> results
+            </p>
+          </div>
+          <div>
+            <nav
+              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+              aria-label="Pagination"
+            >
+              {/* Previous button */}
+              <button
+                onClick={onChangePrevious}
+                disabled={pagination.page === 1}
+                className={`relative inline-flex items-center rounded-l-md px-2 py-2  bg-slate-300 text-gray-500 `}
               >
-                {/* Previous button */}
-                <button
-                  onClick={onChangePrevious}
-                  disabled={pagination.page === 1}
-                  className={`relative inline-flex items-center rounded-l-md px-2 py-2  bg-slate-300 text-gray-500 `}
-                >
-                  <span className="sr-only">Previous</span>
-                  <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-                </button>
+                <span className="sr-only">Previous</span>
+                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
 
-                {/* Previous button */}
-                <span className="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset bg-indigo-600 text-white focus:outline-offset-0">
-                  {pagination.page}
-                </span>
+              {/* Previous button */}
+              <span className="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset bg-indigo-600 text-white focus:outline-offset-0">
+                {pagination.page}
+              </span>
 
-                {/* Page numbers */}
-                <button
-                  onClick={onChangeNext}
-                  disabled={pagination.count < pagination.pageSize}
-                  className={`relative inline-flex items-center rounded-r-md px-2 py-2  bg-slate-300 text-gray-500`}
-                >
-                  <span className="sr-only">Next</span>
-                  <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </nav>
-            </div>
+              {/* Page numbers */}
+              <button
+                onClick={onChangeNext}
+                disabled={pagination.count < pagination.pageSize}
+                className={`relative inline-flex items-center rounded-r-md px-2 py-2  bg-slate-300 text-gray-500`}
+              >
+                <span className="sr-only">Next</span>
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </nav>
           </div>
         </div>
-        {/* End build UI panigation */}
-      </div>
+         {/* End build UI panigation */}
+
       {/* Build modal cập nhật status đơn hàng */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -271,7 +278,7 @@ function PurchaseOrder() {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="flex items-center justify-center p-3 md:p-4 lg:p-6 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -281,23 +288,42 @@ function PurchaseOrder() {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <Dialog.Panel className="font-sans relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all max-w-md md:max-w-lg lg:max-w-5xl">
+                  {/*Build header modal */}
+                  <div className="bg-gray-50 px-6 py-10 sm:p-6 sm:pb-4 ">
                     <div className="flex justify-center">
-                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left ">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-lg font-semibold leading-6 text-gray-900"
-                        >
-                          Thông tin chi tiết đơn hàng
-                        </Dialog.Title>
-                      </div>
+                      <Dialog.Title
+                        as="h3"
+                        className="flex flex-col items-center gap-y-2 text-lg font-semibold leading-6 text-gray-900 text-center"
+                      >
+                        <p>Mã đơn hàng {orderDetail._id}</p>
+                        <p>
+                          Trạng thái:
+                          <span
+                            className={`inline-block px-2 py-1 rounded text-white ml-2 ${
+                              orderDetail.status === "PLACED"
+                                ? "bg-blue-500"
+                                : orderDetail.status === "COMPLETED"
+                                ? "bg-green-500"
+                                : orderDetail.status === "DELIVERING"
+                                ? "bg-orange-500"
+                                : orderDetail.status === "PREPARED"
+                                ? "bg-yellow-500"
+                                : "bg-red-500"
+                            }`}
+                          >
+                            {statusMapping[orderDetail.status]}
+                          </span>
+                        </p>
+                      </Dialog.Title>
                     </div>
                   </div>
+                  {/* End header modal */}
+
+                  {/* Build main modal*/}
                   <div>
-                    <p>Trạng thái: {statusMapping[orderDetail.status]}</p>
-                    <div>
-                      <h3 className="text-2x font-bold mb-4 text-center">
+                    <div className={`p-4`}>
+                      <h3 className="text-2x font-bold mt-2 mb-6 text-center">
                         Chi tiết sản phẩm đặt hàng
                       </h3>
                       {orderDetail &&
@@ -305,32 +331,51 @@ function PurchaseOrder() {
                       Array.isArray(orderDetail.productList) &&
                       orderDetail.productList.length > 0 ? (
                         <div>
-                          <table>
+                          <table className="mb-5">
                             <thead>
-                              <tr>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Đơn giá</th>
-                                <th>Giảm giá</th>
-                                <th>Thành tiền</th>
+                              <tr className="text-center">
+                                <th className="border-b-2 border-gray-300 px-4 py-2 w-1/2 md:w-1/3 lg:w-1/3">
+                                  Sản phẩm
+                                </th>
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Số lượng
+                                </th>
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Đơn giá
+                                </th>
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Giảm giá
+                                </th>
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Thành tiền
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
                               {orderDetail.productList.map((item) => (
                                 <tr key={item.productId}>
                                   <td>
-                                    <div>
+                                    <div
+                                      className={`flex flex-col md:flex-col lg:flex-row gap-3 items-center gap-x-4 mb-4`}
+                                    >
                                       <Image
                                         src={item.imageProduct}
-                                        width={110}
-                                        height={110}
+                                        width={80}
+                                        height={80}
+                                        className={`w-full h-auto md:w-1/3 lg:w-1/4 rounded-lg`}
                                       />
+                                      <div className={`text-center`}>
+                                        <p>{item.name}</p>
+                                      </div>
                                     </div>
-                                    <div>{item.name}</div>
                                   </td>
-                                  <td>{item.quantity}</td>
-                                  <td>{numeral(item.price).format("0,05$")}</td>
-                                  <td>
+                                  <td className="text-center text-sm md:text-lg lg:text-xl">
+                                    <div>{item.quantity}</div>
+                                  </td>
+                                  <td className="text-right md:text-lg lg:text-xl">
+                                    {numeral(item.price).format("0,05$")}
+                                  </td>
+                                  <td className="text-right md:text-lg lg:text-xl">
                                     {numeral(
                                       (item.price *
                                         item.discount *
@@ -338,7 +383,7 @@ function PurchaseOrder() {
                                         100
                                     ).format("0,05$")}
                                   </td>
-                                  <td>
+                                  <td className="text-right md:text-lg lg:text-xl">
                                     {numeral(
                                       item.price *
                                         item.quantity *
@@ -349,9 +394,10 @@ function PurchaseOrder() {
                               ))}
                             </tbody>
                           </table>
-                          <div>
-                            <div>
-                              Tổng tiền:
+
+                          <div className="flex flex-col justify-center items-end gap-3">
+                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
+                              <div className="font-bold">Tổng tiền:</div>
                               <span>
                                 {`${numeral(
                                   orderDetail.productList.reduce(
@@ -362,8 +408,8 @@ function PurchaseOrder() {
                                 ).format("0,05$")}`}
                               </span>
                             </div>
-                            <div>
-                              Giảm giá:
+                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
+                              <div className="font-bold">Giảm giá</div>
                               <span>
                                 {`${numeral(
                                   orderDetail.productList.reduce(
@@ -378,15 +424,15 @@ function PurchaseOrder() {
                                 ).format("0,05$")}`}
                               </span>
                             </div>
-                            <div>
-                              Phí vận chuyển:
+                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
+                              <div className="font-bold">Phí vận chuyển:</div>
                               <span>
                                 {numeral(orderDetail.totalFee).format("0,05$")}
                               </span>
                             </div>
-                            <div>
-                              Thanh toán:
-                              <span>
+                            <div className= "flex items-center justify-between w-2/3 md:w-2/5 lg:w-1/4 ">
+                              <div className="font-bold">Tổng tiền</div>
+                              <span className = "text-xl font-bold text-red-600">
                                 {`${numeral(
                                   orderDetail.productList.reduce(
                                     (acc, product) =>
@@ -406,14 +452,10 @@ function PurchaseOrder() {
                       )}
                     </div>
                   </div>
-                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                      onClick={() => setOpen(false)}
-                    >
-                      Xác nhận
-                    </button>
+                  {/* End build main modal */}
+                  {/* Build footer modal */}
+                  <div className="bg-gray-50 px-4 py-6 sm:flex sm:flex-row-reverse sm:px-6">
+                    {/*End build footer modal */}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

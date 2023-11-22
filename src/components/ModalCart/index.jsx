@@ -5,7 +5,7 @@ import "numeral/locales/vi";
 
 import axiosClient from "@/libraries/axiosClient";
 import styles from "./ModalCart.module.css";
-import { AiFillDelete } from "react-icons/ai";
+import { FiTrash } from "react-icons/fi";
 import { toast } from "react-toastify";
 import withTokenCheckFunction from "../../../middleware/WithTokenCheckFunction";
 import { useRouter } from "next/router";
@@ -108,9 +108,10 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
         getMe.provinceCode === 203
       ) {
         if (cart.products.length > 0) {
-          const shouldCreateOrder = window.confirm("Vui lòng xác nhận đặt hàng");
+          const shouldCreateOrder = window.confirm(
+            "Vui lòng xác nhận đặt hàng"
+          );
           if (shouldCreateOrder) {
-            
             const value = {
               totalFee: 20000,
               productList: cart.products,
@@ -144,10 +145,10 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
     }
   };
 
-    //Mỗi lần mở modal state thay đổi giá trị
-    useEffect(() => {
-      setButtonDisabled(false);
-    }, [open]);
+  //Mỗi lần mở modal state thay đổi giá trị
+  useEffect(() => {
+    setButtonDisabled(false);
+  }, [open]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -187,11 +188,11 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className={styles.minicart_content_wrapper}>
+                <div className={`${styles.minicart_content_wrapper} font-sans`}>
                   <div className={`${styles.block_title} flex justify-center`}>
                     <Dialog.Title
                       as="h3"
-                      className="text-2xl py-5 font-semibold leading-6 text-gray-900"
+                      className="text-xl py-5 font-bold text-gray-900"
                     >
                       Phần ăn đã chọn
                     </Dialog.Title>
@@ -199,24 +200,25 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                   {cart.products && cart.products.length > 0 ? (
                     <>
                       <div className={styles.block_content}>
-                        <div className={`${styles.minicart_items_wrapper} `}>
-                          <table className={`${styles.minicart_items} `}>
+                        <div
+                          className={`${styles.minicart_items_wrapper} text-center`}
+                        >
+                          <table
+                            className={`${styles.minicart_items} text-base`}
+                          >
                             <thead>
                               <tr>
-                                <th className="border-b-2 border-gray-300 p-2">
-                                  Hình ảnh
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Sản phẩm
                                 </th>
-                                <th className="border-b-2 border-gray-300 p-2">
-                                  Tên đơn hàng
-                                </th>
-                                <th className="border-b-2 border-gray-300 p-2">
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
                                   Số lượng
                                 </th>
-                                <th className="border-b-2 border-gray-300 p-2">
-                                  Giá tiền
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Giá
                                 </th>
-                                <th className="border-b-2 border-gray-300 p-2">
-                                  Xóa sản phẩm
+                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                  Xóa
                                 </th>
                                 {/* Thêm tiêu đề cho các cột khác của đơn hàng */}
                               </tr>
@@ -227,51 +229,30 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                   return (
                                     <tr
                                       key={item.productId}
-                                      className={`${styles.product_item}`}
+                                      className={`${styles.product_item} p-2`}
                                     >
-                                      <td className={styles.image}>
-                                        <div
-                                          className={
-                                            styles.product_image_container
-                                          }
-                                        >
-                                          <div
-                                            className={
-                                              styles.product_image_wrapper
-                                            }
-                                          >
+                                      <td
+                                        className={`${styles.product}`}
+                                      >
+                                        <div className={`${styles.product_item_details} flex items-center gap-x-3 py-2`}>
                                             <img
                                               src={item.coverImageUrl}
                                               alt={item.name}
+                                              className= "w-1/3 h-auto"
                                             />
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td className={styles.product}>
-                                        <div
-                                          className={
-                                            styles.product_item_details
-                                          }
-                                        >
-                                          <strong
-                                            className={styles.product_item_name}
+                                          <p
+                                            className={`${styles.product_item_name} text-sm`}
                                           >
                                             {item.name}
-                                          </strong>
-                                          <div
-                                            className={styles.product_options}
-                                          >
-                                            <div className={styles.description}>
-                                              {item.description}
-                                            </div>
-                                          </div>
+                                          </p>
                                         </div>
                                       </td>
-                                      <td className={styles.quantity}>
-                                        <div className="flex items-center">
+
+                                      <td className={`${styles.quantity}`}>
+                                        <div className="flex items-center justify-center h-8">
                                           <button
                                             type="button"
-                                            className="bg-gray-200 text-gray-700 px-3 py-1 rounded-l-full focus:outline-none"
+                                            className="bg-gray-200 text-gray-700 hover:bg-gray-400 px-3 py-1 h-full rounded-l-full focus:outline-none flex items-center justify-center"
                                             onClick={() =>
                                               handleDecreaseQuantity(
                                                 item.productId
@@ -283,7 +264,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                           <input
                                             type="text"
                                             name="quantity"
-                                            className="w-16 py-1 text-center bg-gray-100 "
+                                            className="w-1/3 px-3 p-2 h-full text-center bg-gray-100"
                                             value={item.quantity}
                                             onChange={(e) =>
                                               handleInputChange(
@@ -294,7 +275,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                           />
                                           <button
                                             type="button"
-                                            className="bg-gray-200 text-gray-700 px-3 py-1 rounded-r-full focus:outline-none"
+                                            className="bg-gray-200 text-gray-700 hover:bg-gray-400 px-3 py-1 h-full rounded-r-full focus:outline-none flex items-center justify-center"
                                             onClick={() =>
                                               handleIncreaseQuantity(
                                                 item.productId
@@ -305,26 +286,34 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                           </button>
                                         </div>
                                       </td>
-                                      <td className={styles.price}>
-                                        <div className={styles.price_wrapper}>
+
+                                      <td className={`${styles.price} w-1/4`}>
+                                        <div
+                                          className={`${styles.price_wrapper} w-full`}
+                                        >
                                           <div
-                                            className={`${styles.minicart_price} flex gap-1 text-lg`}
+                                            className={`${styles.minicart_price} flex justify-center items-end font-bold text-lg`}
                                           >
-                                            {numeral(item.price * item.quantity -
-                                              (item.price *
-                                                item.quantity *
-                                                item.discount) /
-                                                100).format("0,05$")}
+                                            {numeral(
+                                              item.price * item.quantity -
+                                                (item.price *
+                                                  item.quantity *
+                                                  item.discount) /
+                                                  100
+                                            ).format("0,05$")}
                                           </div>
                                         </div>
                                       </td>
-                                      <td className={styles.actions}>
-                                        <div className={styles.product_actions}>
+
+                                      <td className={`${styles.actions} w-1/8`}>
+                                        <div
+                                          className={`${styles.product_actions} w-full flex justify-center items-center`}
+                                        >
                                           <button
-                                            className={styles.remove_actions}
+                                            className={`${styles.remove_actions} hover:bg-gray-400 rounded-md`}
                                             onClick={() => handleRemove(item)}
                                           >
-                                            <AiFillDelete />
+                                            <FiTrash size={"20px"} />
                                           </button>
                                         </div>
                                       </td>
@@ -335,35 +324,53 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                           </table>
                         </div>
                       </div>
-                      <div className={`${styles.block_total} flex flex-col gap-x-2`}>
-                        <div className={`${styles.total} flex gap-x-3`}>
-                          <p>Tổng tiền:</p>
-                          <div>
-                            {`${numeral(cart.products?.reduce(
-                              (acc, productItemCart) =>
-                                acc +
-                                productItemCart.price *
-                                  productItemCart.quantity *
-                                  (1 - productItemCart.discount / 100),
-                              0
-                            )).format("0,05$")}`}
+
+                      <div className={`flex flex-row-reverse`}>
+                        <div
+                          className={`${styles.block_total} flex flex-col gap-y-2 font-sans w-3/4 items-end px-4 py-3`}
+                        >
+                          <div
+                            className={`${styles.total} flex gap-x-2 items-center`}
+                          >
+                            <p className={`font-bold text-lg`}>Tổng tiền:</p>
+                            <div>
+                              {`${numeral(
+                                cart.products?.reduce(
+                                  (acc, productItemCart) =>
+                                    acc +
+                                    productItemCart.price *
+                                      productItemCart.quantity *
+                                      (1 - productItemCart.discount / 100),
+                                  0
+                                )
+                              ).format("0,05$")}`}
+                            </div>
                           </div>
-                        </div>
-                        <div className= {`${styles.total_ship}`}>
-                          <p>Phí vận chuyển: {numeral(20000).format("0,05$")}</p>
-                        </div>
-                        <div className = {`${styles.total_pay} flex gap-x-2`}>
-                          <p>Thanh toán:</p>
-                          <span>                          
-                            {`${numeral(cart.products?.reduce(
-                              (acc, productItemCart) =>
-                                acc +
-                                productItemCart.price *
-                                  productItemCart.quantity *
-                                  (1 - productItemCart.discount / 100),
-                              0
-                            ) + 20000).format("0,05$")}`}
+                          <div
+                            className={`${styles.total_ship} flex gap-x-2 items-center`}
+                          >
+                            <p className={`font-bold text-lg`}>
+                              Phí vận chuyển:
+                            </p>
+                            <div>{numeral(20000).format("0,05$")}</div>
+                          </div>
+                          <div
+                            className={`${styles.total_pay} flex gap-x-2 items-center`}
+                          >
+                            <p className={`font-bold text-lg`}>Thanh toán:</p>
+                            <span className = {`font-bold text-red-600 text-md md:text-lg lg:text-lg`}>
+                              {`${numeral(
+                                cart.products?.reduce(
+                                  (acc, productItemCart) =>
+                                    acc +
+                                    productItemCart.price *
+                                      productItemCart.quantity *
+                                      (1 - productItemCart.discount / 100),
+                                  0
+                                ) + 20000
+                              ).format("0,05$")}`}
                             </span>
+                          </div>
                         </div>
                       </div>
                     </>
@@ -377,7 +384,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                   <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 sm:ml-3 sm:w-auto"
                       onClick={handleCreateOrder}
                       disabled={isButtonDisabled}
                     >
@@ -385,7 +392,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                     </button>
                     <button
                       type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-400 sm:mt-0 sm:w-auto"
                       onClick={handleSave}
                       ref={cancelButtonRef}
                     >

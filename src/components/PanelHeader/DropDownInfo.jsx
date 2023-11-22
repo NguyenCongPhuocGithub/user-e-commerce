@@ -14,7 +14,7 @@ function DropDownInfo({customer}) {
     const router = useRouter();
 
     const handelLogout = () =>{
-      router.push('/');
+      router.push('/login');
       window.localStorage.removeItem('TOKEN');
       window.localStorage.removeItem('REFRESH_TOKEN');
       toast.success("Bạn đã đăng xuất thành công");

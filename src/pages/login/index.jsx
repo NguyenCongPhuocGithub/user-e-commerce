@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 
-import styles from "../styles/Login.module.css";
 import LoginContent from "@/components/LoginContent";
 
 function Login() {
