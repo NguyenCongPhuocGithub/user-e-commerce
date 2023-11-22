@@ -62,18 +62,25 @@ function ProductList(props) {
             </ul>
           </div>
           <div className={`${styles.minicart_wrapper} flex justify-end`}>
-              <div className={`${styles.minicart_content_trigger} fixed bottom-0 flex justify-center w-1/4 md:w-1/4 lg:w-1/5 py-2 px-3 bg-yellow-400 rounded-t-2xl`}>
-                <button
-                  className={styles.minicart_icon}
-                  onClick={handleGetCart}
-                >
-                  <BsCart4 size="3rem" />
-                </button>
-                <span className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}>
-                <span className={`${styles.productLength} w-full h-1/2 flex justify-center items-center rounded-full bg-red-700 text-white`}>{cart.products && cart.products.length}</span>
-                </span>
-              </div>
+            <div
+              className={`${styles.minicart_content_trigger} fixed bottom-0 flex justify-center w-1/4 md:w-1/4 lg:w-1/5 py-2 px-3 bg-yellow-400 rounded-t-2xl`}
+            >
+              <button className={styles.minicart_icon} onClick={handleGetCart}>
+                <BsCart4 size="3rem" />
+              </button>
+              <span
+                className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}
+              >
+                {cart && cart.products && cart.products.length > 0 && (
+                  <span
+                    className={`${styles.productLength} w-full h-1/2 flex justify-center items-center rounded-full bg-red-700 text-white`}
+                  >
+                    {cart.products.length}
+                  </span>
+                )}
+              </span>
             </div>
+          </div>
           <ModalCart
             open={open}
             setOpen={setOpen}

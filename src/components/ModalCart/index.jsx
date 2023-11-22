@@ -157,7 +157,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
         className="relative z-10"
         initialFocus={cancelButtonRef}
         onClose={() => {
-          if (cart.products && cart.products.length === 0) {
+          if ((cart.products && cart.products.length === 0) || !cart.product) {
             setOpen(false);
           } else {
             setOpen(true);
