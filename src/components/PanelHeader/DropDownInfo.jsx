@@ -11,10 +11,10 @@ function classNames(...classes) {
 }
 
 function DropDownInfo({customer}) {
-    const router = useRouter();
+    // const router = useRouter();
     
     const handleLogout = () => {
-      router.push('/login');
+      // router.push('/login');
       toast.success("Bạn đã đăng xuất thành công");
       window.localStorage.removeItem('TOKEN');
       window.localStorage.removeItem('REFRESH_TOKEN');
