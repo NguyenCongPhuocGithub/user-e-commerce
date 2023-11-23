@@ -7,8 +7,8 @@ function Footer() {
     <footer className = {styles.page_footer}>
       <div className={`${styles.footer_content}`}>
         <div className={`${styles.footer_text} container mx-auto`}>
-          <div className={`grid grid-cols-12 justify-content-between`}>
-            <div className={`col-span-12 md:col-span-6 lg:col-span-5 ${styles.address}`}>
+          <div className={`grid grid-cols-12 gap-5`}>
+            <div className={`col-span-12 md:col-span-6 lg:col-span-6 ${styles.address}`}>
               <div className={styles.footer_logo}>
                 <img
                   src="https://jollibee.com.vn/media/logo-footer.png"
@@ -32,7 +32,7 @@ function Footer() {
                 </p>
               </div>
             </div>
-            <div className={`col-span-12 md:col-span-6 lg:col-span-3`}>
+            <div className={`col-span-12 md:col-span-3 lg:col-span-3`}>
               <a href="tel:19001533">
                 <img
                   className={styles.img_ship}
@@ -67,7 +67,7 @@ function Footer() {
                 </li>
               </ul>
             </div>
-            <div className={`col-span-12 md:col-span-6 lg:col-span-3`}>
+            <div className={`col-span-12 md:col-span-3 lg:col-span-3`}>
               <p className = {`text-uppercase ${styles.title}`}>Hãy liên kết với chúng tôi</p>
               <div className = {styles.block_social}>
                 <a className = {styles.btn_icon} href="https://www.facebook.com/JollibeeVietnam" >

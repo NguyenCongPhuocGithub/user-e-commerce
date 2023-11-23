@@ -11,13 +11,13 @@ function HomeContent() {
     <>
       <div>
         <div>
-          <SwiperHome />
+          <SwiperHome/>
         </div>
         <div>
           <HomeWidgetMenu/>
         </div>
         <div>
-        <WidgetService/>
+          <WidgetService/>
         </div>
         <div>
           <BannerWelcome/>

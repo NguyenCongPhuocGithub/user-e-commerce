@@ -7,7 +7,7 @@ function HomeWidgetMenu() {
     <>
       <div className={styles.widget_today_menu_wrapper}>
         <div className={styles.today_menu_content}>
-          <div className={styles.intro_wrapper}>
+          <div className={`${styles.intro_wrapper}`}>
             <div className={styles.intro}>
               <div className={styles.logo}>
                 <img

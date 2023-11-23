@@ -23,6 +23,8 @@
 .intro_wrapper .logo{
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .intro-wrapper .title{
@@ -112,7 +114,7 @@
     border-radius: 20px 20px 0 0;
     padding: 20px;
     position: absolute;
-    bottom: 90px;
+    bottom: 72px;
     left: 20px;
     right: 20px;
     text-align: center;
@@ -151,3 +153,54 @@
 
 /* End build css main_menu_wrapper */
 
+
+/* Build responsive  */
+
+@media screen and (max-width: 1439px) {
+    .intro_wrapper .intro{
+        padding: 20px;
+    }
+  }
+
+
+  @media screen and (max-width: 1023px) {
+
+    .main_menu_wrapper .quad_menu .quad .bottom_img_wrapper{
+        padding: 25px;
+    }
+
+    .widget_today_menu_wrapper .today_menu_content{
+        padding: 0 20px;
+    }
+
+    .today_menu_content .intro_wrapper{
+        display: none;
+    }
+
+    .today_menu_content .main_menu_wrapper{
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .today_menu_content .main_menu_wrapper .quad_menu{
+        display: grid;
+        gap: 15px;
+        grid-template-columns: auto auto;
+        grid-column-gap: 15px;
+        grid-row-gap: 20px;
+        width: 100%;
+    }
+
+    .today_menu_content .main_menu_wrapper .quad_menu .quad{
+        margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 440px) {
+
+    .main_menu_wrapper .quad_menu .quad .bottom_img_wrapper{
+        padding: 14px;
+    }
+  }
+
+/* End build responsive */

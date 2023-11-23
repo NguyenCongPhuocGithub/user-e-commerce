@@ -20,3 +20,24 @@
     border-radius: 10px 10px 0 0;
 }
 
+/* Build responsive */
+@media screen and (max-width: 1023px){
+    .main_navigation{
+        flex-direction: column;
+        background-color: #353535;
+        position: absolute;
+        top: 110px;
+        left: 5%;
+        width: 90%;
+        z-index: 6;
+        align-items: center;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .main_navigation li:hover{
+        background-color: #F3D2D6;
+        border-radius: 10px;
+    }
+ }
+/* End build responsive */
+

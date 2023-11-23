@@ -53,11 +53,11 @@ export default WidgetService;
 function Service_Entry({ href, srcImg, alt, contentMedia, contentAction }) {
   return (
     <div className={styles.service_entry}>
-      <div className={styles.media}>
+      <div className={`${styles.media}`}>
         <Link className={styles.media_center} href={href}>
           <img className={styles.img} src={srcImg} alt={alt} />
         </Link>
-        <div className={styles.media_content}>
+        <div className={`${styles.media_content} hidden md:hidden lg:block`}>
           <h4 className={styles.media_heading}>{contentMedia}</h4>
           <Link className={styles.action} href={href}>
             {contentAction}

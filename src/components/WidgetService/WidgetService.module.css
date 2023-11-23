@@ -45,7 +45,6 @@
 .content_service .service_entry .media_center{
     display: block;
     min-height: 348px;
-
 }
 
 .service_entry .media_center:visited{
@@ -91,3 +90,13 @@
 }
 
 /* End build css content_service */
+
+/* Build responsive */
+
+@media screen and (max-width: 1023px) {
+    .content_service .service_entry .media_center{
+        min-height: 0;
+    }
+  }
+
+/* End build responsive */

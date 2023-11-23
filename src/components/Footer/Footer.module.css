@@ -16,10 +16,13 @@
 
 .footer_text .address {
     display: flex;
-    justify-content: flex-end;
     padding-left: 15px;
     padding-right: 15px;
     box-sizing: border-box;
+}
+
+.footer_text .address .info_address{
+    line-height: 2rem;
 }
 
 .footer_text .address .info_address>p:first-child {
@@ -69,5 +72,14 @@
     align-items: center;
     font-size: 18px;
 }
+
+/* Build responsive */
+@media screen and (max-width: 1439px){
+    .address {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+ }
+/* End build responsive */
 
 
