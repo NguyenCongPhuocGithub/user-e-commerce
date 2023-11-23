@@ -20,17 +20,19 @@ function Header() {
     setShowNav(!showNav);
   };
 
-  const getMe = useCallback(async () => {
+  const getMe = useCallback(async (isLogin) => {
     try {
-      const res = await axiosClient.get("/customers");
-      setCustomer(res.data?.payload || {});
+      if(isLogin === true){
+        const res = await axiosClient.get("/customers");
+        setCustomer(res.data?.payload || {});
+      }
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
   }, []);
 
   useEffect(() => {
-    getMe();
+    getMe(isLogin);
   }, [getMe, isLogin]);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ function Header() {
           </button>
           <HeaderLogo />
           <div className="hidden md:hidden lg:flex">
-            <NavigationBar />
+            <NavigationBar/>
           </div>
           <Delivery customer = {customer} isLogin = {isLogin}/>
         </div>

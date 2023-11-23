@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 import { toast } from 'react-toastify'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 function classNames(...classes) {
@@ -11,10 +11,10 @@ function classNames(...classes) {
 }
 
 function DropDownInfo({customer}) {
-    // const router = useRouter();
-    
+    const router = useRouter();
+  
     const handleLogout = () => {
-      // router.push('/login');
+      router.push('/login');
       toast.success("Bạn đã đăng xuất thành công");
       window.localStorage.removeItem('TOKEN');
       window.localStorage.removeItem('REFRESH_TOKEN');
