@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>HomePage</title>
+        <title>Trang chủ</title>
         <meta property="url" content="https://jollibee.com.vn/"/>
         <meta name="type" content="website"/>
         <meta name ="title" content="Jollibee Việt Nam"/>

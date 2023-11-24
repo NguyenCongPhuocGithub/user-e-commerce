@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import moment from "moment";
+import Head from "next/head";
 
 import styles from "../styles/Profile.module.css";
 import axiosClient from "@/libraries/axiosClient";
@@ -224,7 +225,14 @@ function Profile() {
   }, [validation.values.wardCode]);
 
   return (
-    <div 
+    <>
+      <Head>
+        <title>Thông tin cá nhân</title>
+        <meta name="description" content="Thông tin cá nhân" />
+        <meta name="viewport" content="Thông tin cá nhân" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+     <div 
     className="flex items-center justify-center shadow-md bg-gray-100 py-8" 
     style={{
       backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
@@ -491,6 +499,7 @@ function Profile() {
         </button>
       </form>
     </div>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import { Fragment} from 'react'
+import { Fragment, useCallback, useEffect, useState} from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
@@ -12,13 +12,20 @@ function classNames(...classes) {
 
 function DropDownInfo({customer}) {
     const router = useRouter();
-  
-    const handleLogout = () => {
-      router.push('/login');
-      toast.success("Bạn đã đăng xuất thành công");
-      window.localStorage.removeItem('TOKEN');
-      window.localStorage.removeItem('REFRESH_TOKEN');
-    };
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+    const handleLogout = useCallback(async() => {
+      try {
+        setIsButtonDisabled(true);
+        router.push('/login');
+        toast.success("Bạn đã đăng xuất thành công");
+        window.localStorage.removeItem('TOKEN');
+        window.localStorage.removeItem('REFRESH_TOKEN');
+      } catch (error) {
+        toast.error("Bạn đã đăng xuất thất bại");
+        setIsButtonDisabled(false);
+      }
+    }, []);
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -89,6 +96,7 @@ function DropDownInfo({customer}) {
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
                     onClick={handleLogout}
+                    disabled={isButtonDisabled}
                   >
                     Đăng xuất
                   </button>

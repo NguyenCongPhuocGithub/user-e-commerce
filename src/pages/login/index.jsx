@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 import LoginContent from "@/components/LoginContent";
 
@@ -17,6 +18,12 @@ function Login() {
 
   return (
     <>
+      <Head>
+        <title>Đăng nhập</title>
+        <meta name="description" content="Đăng nhập Jollibee" />
+        <meta name="viewport" content="Đăng nhập Jollibee" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {isLogin ? null : <LoginContent />}
     </>
   );

@@ -68,7 +68,7 @@ function PanelHeader({customer, isLogin}) {
             <div className={styles.switcher}>
               <BiMap size="2rem" />
               <strong>
-                {customer && customer.provinceName
+                {isLogin
                   ? customer.provinceName
                   : "Tỉnh thành"}
               </strong>

@@ -1,6 +1,7 @@
 import RegisterContent from '@/components/RegisterContent';
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 function Register() {
   const router = useRouter();
@@ -16,6 +17,12 @@ function Register() {
 
   return (
     <>
+      <Head>
+        <title>Đăng ký</title>
+        <meta name="description" content="Đăng ký Jollibee" />
+        <meta name="viewport" content="Đăng ký Jollibee" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {isLogin ? null : <RegisterContent />}
     </>
   );

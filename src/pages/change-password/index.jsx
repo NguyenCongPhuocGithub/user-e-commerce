@@ -90,7 +90,7 @@ function ChangePassword() {
         setIsButtonDisabled(true);
         await axiosClient.patch(`/customers/changePassword`, values),
           router.push("/");
-          toast.success("Cập nhật mật khẩu thành công");
+        toast.success("Cập nhật mật khẩu thành công");
       } catch (error) {
         console.error(error);
         toast.error("Cập nhật mật khẩu thất bại");
@@ -100,93 +100,102 @@ function ChangePassword() {
   });
 
   return (
-    <div 
-    className="flex items-center justify-center shadow-md bg-gray-100 py-8"
-    style={{
-      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
-      backgroundSize: "cover"
-    }}
-    >
-      <form
-        onSubmit={validation.handleSubmit}
-        className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg"
+    <>
+      <Head>
+        <title>Thay đổi mật khẩu</title>
+        <meta name="description" content="Thay đổi mật khẩu Jollibee" />
+        <meta name="viewport" content="Thay đổi mật khẩu Jollibee" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div
+        className="flex items-center justify-center shadow-md bg-gray-100 py-8"
+        style={{
+          backgroundImage:
+            "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+          backgroundSize: "cover",
+        }}
       >
-        <div className="mb-4">
-          <label htmlFor="passwordOld" className="block font-medium mb-1">
-            Nhập mật khẩu cũ:
-          </label>
-          <input
-            type="password"
-            id="passwordOld"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            placeholder="Vui lòng nhập mật khẩu cũ"
-            name="passwordOld"
-            value={validation.values.passwordOld}
-            onChange={validation.handleChange}
-            onBlur={validation.handleBlur}
-            autoComplete="off" // Tắt gợi ý nhập
-          />
-        </div>
-        {validation.errors.passwordOld && validation.touched.passwordOld && (
-          <div className="text-red-500 mb-4">
-            {validation.errors.passwordOld}
+        <form
+          onSubmit={validation.handleSubmit}
+          className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg"
+        >
+          <div className="mb-4">
+            <label htmlFor="passwordOld" className="block font-medium mb-1">
+              Nhập mật khẩu cũ:
+            </label>
+            <input
+              type="password"
+              id="passwordOld"
+              className="border border-gray-300 rounded px-3 py-2 w-full"
+              placeholder="Vui lòng nhập mật khẩu cũ"
+              name="passwordOld"
+              value={validation.values.passwordOld}
+              onChange={validation.handleChange}
+              onBlur={validation.handleBlur}
+              autoComplete="off" // Tắt gợi ý nhập
+            />
           </div>
-        )}
-
-        <div className="mb-4">
-          <label htmlFor="newPassword" className="block font-medium mb-1">
-            Mật khẩu mới:
-          </label>
-          <input
-            type="password" // Sử dụng type="password" để ẩn mật khẩu
-            id="newPassword"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            placeholder="Vui lòng nhập mật khẩu mới"
-            name="newPassword"
-            value={validation.values.newPassword}
-            onChange={validation.handleChange}
-            onBlur={validation.handleBlur}
-            autoComplete="off" // Tắt gợi ý nhập
-          />
-        </div>
-        {validation.errors.newPassword && validation.touched.newPassword && (
-          <div className="text-red-500 mb-4">
-            {validation.errors.newPassword}
-          </div>
-        )}
-
-        <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block font-medium mb-1">
-            Nhập lại mật khẩu mới:
-          </label>
-          <input
-            type="password" // Sử dụng type="password" để ẩn mật khẩu
-            id="confirmPassword"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            placeholder="Vui lòng nhập lại thông tin mới"
-            name="confirmPassword"
-            value={validation.values.confirmPassword}
-            onChange={validation.handleChange}
-            onBlur={validation.handleBlur}
-            autoComplete="off" // Tắt gợi ý nhập
-          />
-        </div>
-        {validation.errors.confirmPassword &&
-          validation.touched.confirmPassword && (
+          {validation.errors.passwordOld && validation.touched.passwordOld && (
             <div className="text-red-500 mb-4">
-              {validation.errors.confirmPassword}
+              {validation.errors.passwordOld}
             </div>
           )}
 
-        <button
-          type="submit"
-          className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
-          disabled={isButtonDisabled}
-        >
-          Thay đổi mật khẩu
-        </button>
-      </form>
-    </div>
+          <div className="mb-4">
+            <label htmlFor="newPassword" className="block font-medium mb-1">
+              Mật khẩu mới:
+            </label>
+            <input
+              type="password" // Sử dụng type="password" để ẩn mật khẩu
+              id="newPassword"
+              className="border border-gray-300 rounded px-3 py-2 w-full"
+              placeholder="Vui lòng nhập mật khẩu mới"
+              name="newPassword"
+              value={validation.values.newPassword}
+              onChange={validation.handleChange}
+              onBlur={validation.handleBlur}
+              autoComplete="off" // Tắt gợi ý nhập
+            />
+          </div>
+          {validation.errors.newPassword && validation.touched.newPassword && (
+            <div className="text-red-500 mb-4">
+              {validation.errors.newPassword}
+            </div>
+          )}
+
+          <div className="mb-4">
+            <label htmlFor="confirmPassword" className="block font-medium mb-1">
+              Nhập lại mật khẩu mới:
+            </label>
+            <input
+              type="password" // Sử dụng type="password" để ẩn mật khẩu
+              id="confirmPassword"
+              className="border border-gray-300 rounded px-3 py-2 w-full"
+              placeholder="Vui lòng nhập lại thông tin mới"
+              name="confirmPassword"
+              value={validation.values.confirmPassword}
+              onChange={validation.handleChange}
+              onBlur={validation.handleBlur}
+              autoComplete="off" // Tắt gợi ý nhập
+            />
+          </div>
+          {validation.errors.confirmPassword &&
+            validation.touched.confirmPassword && (
+              <div className="text-red-500 mb-4">
+                {validation.errors.confirmPassword}
+              </div>
+            )}
+
+          <button
+            type="submit"
+            className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
+            disabled={isButtonDisabled}
+          >
+            Thay đổi mật khẩu
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

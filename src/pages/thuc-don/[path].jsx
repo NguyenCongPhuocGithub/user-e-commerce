@@ -11,7 +11,7 @@ import styles from "../styles/thuc-don.module.css";
 import ModalCart from "@/components/ModalCart";
 
 function ProductList(props) {
-  const { products } = props;
+  const { products, category } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -40,9 +40,9 @@ function ProductList(props) {
   return (
     <>
       <Head>
-        <title>Jollibee gà rán thơm ngon</title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="" />
+        <title>{category.name}</title>
+        <meta name="description" content={`Jollibee ${category.name}`} />
+        <meta name="viewport" content={`Jollibee ${category.name}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
@@ -166,6 +166,7 @@ export async function getStaticProps(req) {
     return {
       props: {
         products: products,
+        category: matchedCategory[0],
       },
 
       revalidate: 60 * 60 * 24 * 30,
