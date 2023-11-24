@@ -45,52 +45,68 @@ function ProductList(props) {
         <meta name="viewport" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {products && (
-        <div className={`container mx-auto px-4 md:px-6 lg:px-8`}>
-          <div className={`${styles.product_wrapper} py-4 md:py-6 lg:py-8`}>
-            <ul
-              className={`${styles.product_list} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}
-            >
-              {products.map((item, index) => (
-                <ProductContent
-                  key={item._id}
-                  products={item}
-                  getCart={getCart}
-                  index={index}
-                />
-              ))}
-            </ul>
-          </div>
-          <div className={`${styles.minicart_wrapper} flex justify-end`}>
-            <div
-              className={`${styles.minicart_content_trigger} fixed bottom-0 flex justify-center w-1/4 md:w-1/4 lg:w-1/5 py-2 px-3 bg-yellow-400 rounded-t-2xl`}
-            >
-              <button className={styles.minicart_icon} onClick={handleGetCart}>
-                <BsCart4 size="3rem" />
-              </button>
-              <span
-                className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}
+      <div
+        style={{
+          backgroundImage:
+            "url('https://jollibee.com.vn/static/version1699974795/frontend/Jollibee/default/vi_VN/images/bg-top.png'), url('https://jollibee.com.vn/static/version1699974795/frontend/Jollibee/default/vi_VN/images/bg-bottom.png')",
+          width: "100%",
+          maxWidth: "100%",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundPosition: "center top, center calc(100% - 80px)",
+          backgroundSize: "100% auto, 100% auto",
+          position: "relative",
+        }}
+      >
+        {products && (
+          <div className={`container mx-auto px-4 md:px-6 lg:px-8 `}>
+            <div className={`${styles.product_wrapper} py-4 md:py-6 lg:py-8`}>
+              <ul
+                className={`${styles.product_list} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}
               >
-                {cart && cart.products && cart.products.length > 0 && (
-                  <span
-                    className={`${styles.productLength} w-full h-1/2 flex justify-center items-center rounded-full bg-red-700 text-white`}
-                  >
-                    {cart.products.length}
-                  </span>
-                )}
-              </span>
+                {products.map((item, index) => (
+                  <ProductContent
+                    key={item._id}
+                    products={item}
+                    getCart={getCart}
+                    index={index}
+                  />
+                ))}
+              </ul>
             </div>
+            <div className={`${styles.minicart_wrapper} flex justify-end`}>
+              <div
+                className={`${styles.minicart_content_trigger} fixed bottom-0 flex justify-center w-1/4 md:w-1/4 lg:w-1/5 py-2 px-3 bg-yellow-400 rounded-t-2xl`}
+              >
+                <button
+                  className={styles.minicart_icon}
+                  onClick={handleGetCart}
+                >
+                  <BsCart4 size="3rem" />
+                </button>
+                <span
+                  className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}
+                >
+                  {cart && cart.products && cart.products.length > 0 && (
+                    <span
+                      className={`${styles.productLength} w-full h-1/2 flex justify-center items-center rounded-full bg-red-700 text-white`}
+                    >
+                      {cart.products.length}
+                    </span>
+                  )}
+                </span>
+              </div>
+            </div>
+            <ModalCart
+              open={open}
+              setOpen={setOpen}
+              products={products}
+              cart={cart}
+              setCart={setCart}
+              getCart={getCart}
+            />
           </div>
-          <ModalCart
-            open={open}
-            setOpen={setOpen}
-            products={products}
-            cart={cart}
-            setCart={setCart}
-            getCart={getCart}
-          />
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 }

@@ -8,11 +8,14 @@ import axiosClient from "@/libraries/axiosClient";
 import axios from "axios";
 import withTokenCheckComponent from "../../../middleware/withTokenCheckComponent";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 function Profile() {
+  const router = useRouter();
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const validation = useFormik({
     initialValues: {
@@ -96,11 +99,14 @@ function Profile() {
 
     onSubmit: async (values) => {
       try {
+        setIsButtonDisabled(true);
         await axiosClient.patch("/customers", values);
+        router.push("/");
         toast.success("Cập nhật thông tin thành công");
       } catch (error) {
         console.error(error);
         toast.error("Cập nhật thông tin thất bại thất bại");
+        setIsButtonDisabled(false);
       }
     },
   });
@@ -218,7 +224,13 @@ function Profile() {
   }, [validation.values.wardCode]);
 
   return (
-    <div className="flex items-center justify-center shadow-md bg-gray-100 py-8">
+    <div 
+    className="flex items-center justify-center shadow-md bg-gray-100 py-8" 
+    style={{
+      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+      backgroundSize: "cover"
+    }}
+    >
       <form onSubmit={validation.handleSubmit} className="w-full max-w-sm px-4 bg-white p-6 rounded-lg">
         <div className="mb-4">
           <label
@@ -473,6 +485,7 @@ function Profile() {
         <button
           type="submit"
           className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
+          disabled={isButtonDisabled}
         >
           Cập nhật thông tin
         </button>

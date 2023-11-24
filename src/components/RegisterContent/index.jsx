@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import axiosClient from "../../libraries/axiosClient";
 
 function RegisterContent() {
   const router = useRouter();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const validation = useFormik({
     initialValues: {
@@ -60,18 +61,26 @@ function RegisterContent() {
 
     onSubmit: async (values) => {
       try {
+        setIsButtonDisabled(true);
         await axiosClient.post("/auth/register", values);
         router.push("/");
-        toast.success("Đăng kí thành công");
+        toast.success("Đăng ký thành công");
       } catch (error) {
         console.error(error);
-        toast.error("Đăng kí thông tin thất bại");
+        toast.error("Đăng ký thông tin thất bại");
+        setIsButtonDisabled(false);
       }
     },
   });
 
   return (
-    <div className="flex justify-center items-center bg-gray-100">
+    <div 
+    className="flex justify-center items-center bg-gray-100 p-10"
+    style={{
+      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+      backgroundSize: "cover"
+    }}
+    >
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <h2 className="text-2xl font-semibold mb-6 text-center">Đăng ký</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
@@ -220,6 +229,7 @@ function RegisterContent() {
             <button
               type="submit"
               className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
+              disabled={isButtonDisabled}
             >
               Đăng ký
             </button>

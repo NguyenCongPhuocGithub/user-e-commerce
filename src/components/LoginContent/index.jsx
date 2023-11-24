@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 // import InputGroup from "./InputGroup";
 import axiosClient from "../../libraries/axiosClient";
 
 function LoginContent() {
   const router = useRouter();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const validation = useFormik({
     initialValues: {
@@ -27,6 +29,7 @@ function LoginContent() {
 
     onSubmit: async (values) => {
       try {
+        setIsButtonDisabled(true);
         const res = await axiosClient.post("/auth/login", values);
         const { token, refreshToken } = res.data;
 
@@ -40,12 +43,19 @@ function LoginContent() {
       } catch (error) {
         console.error(error);
         toast.error("Thông tin đăng nhập không chính xác. Vui lòng thử lại.");
+        setIsButtonDisabled(false);
       }
     },
   });
 
   return (
-    <div className="flex justify-center items-center bg-gray-100">
+    <div 
+    className="flex justify-center items-center bg-gray-100 p-10"
+    style={{
+      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+      backgroundSize: "cover"
+    }}
+    >
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <h2 className="text-2xl font-semibold mb-6 text-center">Đăng nhập</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
@@ -98,9 +108,15 @@ function LoginContent() {
           <button
             type="submit"
             className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
+            disabled={isButtonDisabled}
           >
             Đăng nhập
           </button>
+
+        <div className="flex justify-center gap-x-1">
+          <p>Đăng ký tài khoản mới</p>
+          <Link href="/register" className="text-blue-500">tại đây</Link>
+        </div>
         </form>
       </div>
     </div>

@@ -45,7 +45,7 @@ function ProductContent({ products, getCart, index }) {
               <span>{`${numeral(products.price).format("0,05$")}`}</span>
               {products.discount !== 0 && products.discount ? (
                 <div>
-                  <span>Giảm: {products.discount} %</span>
+                  <span className = {`text-yellow-500`}>Giảm: {products.discount} %</span>
                 </div>
               ) : null}
             </div>

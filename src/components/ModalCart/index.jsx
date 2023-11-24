@@ -229,12 +229,12 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                   return (
                                     <tr
                                       key={item.productId}
-                                      className={`${styles.product_item} p-2`}
+                                      className={`${styles.product_item}`}
                                     >
                                       <td
                                         className={`${styles.product}`}
                                       >
-                                        <div className={`${styles.product_item_details} flex items-center gap-x-3 py-2`}>
+                                        <div className={`${styles.product_item_details} flex items-center gap-x-3 p-2`}>
                                             <img
                                               src={item.coverImageUrl}
                                               alt={item.name}
@@ -327,13 +327,13 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
 
                       <div className={`flex flex-row-reverse`}>
                         <div
-                          className={`${styles.block_total} flex flex-col gap-y-2 font-sans w-3/4 items-end px-4 py-3`}
+                          className={`${styles.block_total} flex flex-col gap-y-2 font-sans w-3/5 items-end px-4 py-3`}
                         >
                           <div
-                            className={`${styles.total} flex gap-x-2 items-center`}
+                            className={`${styles.total} flex w-full items-center justify-end`}
                           >
-                            <p className={`font-bold text-lg`}>Tổng tiền:</p>
-                            <div>
+                            <p className={`font-bold text-lg w-1/2 text-right`}>Tổng tiền:</p>
+                            <div className = {`text-right w-1/2 `}>
                               {`${numeral(
                                 cart.products?.reduce(
                                   (acc, productItemCart) =>
@@ -346,19 +346,21 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                               ).format("0,05$")}`}
                             </div>
                           </div>
+
                           <div
-                            className={`${styles.total_ship} flex gap-x-2 items-center`}
+                            className={`${styles.total_ship} flex w-full items-center justify-end`}
                           >
-                            <p className={`font-bold text-lg`}>
+                            <p className={`font-bold text-lg w-1/2 text-right`}>
                               Phí vận chuyển:
                             </p>
-                            <div>{numeral(20000).format("0,05$")}</div>
+                            <div className = {`text-right w-1/2 `}>{numeral(20000).format("0,05$")}</div>
                           </div>
+
                           <div
-                            className={`${styles.total_pay} flex gap-x-2 items-center`}
+                            className={`${styles.total_pay} flex w-full items-center justify-end`}
                           >
-                            <p className={`font-bold text-lg`}>Thanh toán:</p>
-                            <span className = {`font-bold text-red-600 text-md md:text-lg lg:text-lg`}>
+                            <p className={`font-bold text-lg w-1/2 text-right`}>Thanh toán:</p>
+                            <span className = {`font-bold w-1/2  text-right text-red-600 text-md md:text-lg lg:text-lg`}>
                               {`${numeral(
                                 cart.products?.reduce(
                                   (acc, productItemCart) =>
@@ -371,6 +373,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                               ).format("0,05$")}`}
                             </span>
                           </div>
+
                         </div>
                       </div>
                     </>

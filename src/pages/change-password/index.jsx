@@ -4,8 +4,12 @@ import { useFormik } from "formik";
 
 import axiosClient from "@/libraries/axiosClient";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 function ChangePassword() {
+  const router = useRouter();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const validation = useFormik({
     initialValues: {
       passwordOld: "",
@@ -83,17 +87,26 @@ function ChangePassword() {
 
     onSubmit: async (values) => {
       try {
+        setIsButtonDisabled(true);
         await axiosClient.patch(`/customers/changePassword`, values),
+          router.push("/");
           toast.success("Cập nhật mật khẩu thành công");
       } catch (error) {
         console.error(error);
         toast.error("Cập nhật mật khẩu thất bại");
+        setIsButtonDisabled(false);
       }
     },
   });
 
   return (
-    <div className="flex items-center justify-center shadow-md bg-gray-100 py-8">
+    <div 
+    className="flex items-center justify-center shadow-md bg-gray-100 py-8"
+    style={{
+      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+      backgroundSize: "cover"
+    }}
+    >
       <form
         onSubmit={validation.handleSubmit}
         className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg"
@@ -103,7 +116,7 @@ function ChangePassword() {
             Nhập mật khẩu cũ:
           </label>
           <input
-            type="text"
+            type="password"
             id="passwordOld"
             className="border border-gray-300 rounded px-3 py-2 w-full"
             placeholder="Vui lòng nhập mật khẩu cũ"
@@ -168,6 +181,7 @@ function ChangePassword() {
         <button
           type="submit"
           className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
+          disabled={isButtonDisabled}
         >
           Thay đổi mật khẩu
         </button>
