@@ -180,12 +180,48 @@ function RegisterContent() {
             )}
           </div>
 
+          <div>
+            <label className="block mb-1 text-gray-700">Số điện thoại:</label>
+            <input
+              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
+              type="text"
+              placeholder="Vui lòng nhập số điện thoại"
+              name="phoneNumber"
+              value={validation.values.phoneNumber}
+              onChange={validation.handleChange}
+              onBlur={validation.handleBlur}
+            />
+            {validation.errors.phoneNumber && validation.touched.phoneNumber && (
+              <div className="text-red-500 mt-1">
+                {validation.errors.phoneNumber}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block mb-1 text-gray-700">Mật khẩu:</label>
+            <input
+              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
+              type="date"
+              placeholder="Vui lòng nhập số ngày sinh"
+              name="birthday"
+              value={validation.values.birthday}
+              onChange={validation.handleChange}
+              onBlur={validation.handleBlur}
+            />
+            {validation.errors.birthday && validation.touched.birthday && (
+              <div className="text-red-500 mt-1">
+                {validation.errors.birthday}
+              </div>
+            )}
+          </div>
+
           <div className="flex justify-center">
             <button
               type="submit"
               className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
             >
-              Đăng kí
+              Đăng ký
             </button>
           </div>
         </form>
