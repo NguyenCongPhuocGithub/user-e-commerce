@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import Head from "next/head";
 
 import axiosClient from "@/libraries/axiosClient";
 import { toast } from "react-toastify";
