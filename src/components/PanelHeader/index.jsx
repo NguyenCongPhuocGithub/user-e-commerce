@@ -7,33 +7,6 @@ import styles from "./PanelHeader.module.css";
 import DropDownInfo from "./DropDownInfo";
 
 function PanelHeader({customer, isLogin}) {
-  // const router = useRouter();
-  // const [isLogin, setIsLogin] = useState(false);
-
-  // const [customer, setCustomer] = useState({});
-
-  // const getMe = useCallback(async () => {
-  //   try {
-  //     const res = await axiosClient.get("/customers");
-  //     setCustomer(res.data?.payload || {});
-  //   } catch (error) {
-  //     console.log("««««« error »»»»»", error);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   getMe();
-  // }, [getMe, isLogin]);
-
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     const token = localStorage.getItem("TOKEN");
-  //     axiosClient.defaults.headers.Authorization = `Bearer ${token}`;
-  //     //  isLogin === true set client sử dụng token
-  //     // sử dụng !! sử dụng hai lần phủ định - sự thay đổi của token
-  //     setIsLogin(!!token);
-  //   }
-  // });
 
   return (
     <>
@@ -68,7 +41,7 @@ function PanelHeader({customer, isLogin}) {
             <div className={styles.switcher}>
               <BiMap size="2rem" />
               <strong>
-                {isLogin
+                {isLogin && customer.provinceName
                   ? customer.provinceName
                   : "Tỉnh thành"}
               </strong>

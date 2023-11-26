@@ -8,18 +8,22 @@ import NavigationBar from "../NavigationBar";
 import { GiToggles } from "react-icons/gi";
 import PanelHeader from "../PanelHeader";
 import axiosClient from "@/libraries/axiosClient";
+import useCustomer from "@/hooks/useCustomer";
 
 
 function Header() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [showNav, setShowNav] = useState(false);
-  const [customer, setCustomer] = useState({});
+  // const [customer, setCustomer] = useState({});
+  const customer = useCustomer((state) => state.customer);
+  const setCustomer = useCustomer((state) => state.setCustomer);
 
   const handleShowNav = () => {
     setShowNav(!showNav);
   };
 
+  //Chỉ gọi khi đăng nhập vào
   const getMe = useCallback(async (isLogin) => {
     try {
       if(isLogin === true){
@@ -44,7 +48,6 @@ function Header() {
       setIsLogin(!!token);
     }
   });
-
 
   return (
     <header className={styles.page_header}>

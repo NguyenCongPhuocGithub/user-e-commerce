@@ -28,6 +28,7 @@ function ProductContent({ products, getCart, index }) {
                 height={200}
                 src={products.media.coverImageUrl}
                 className="w-full"
+                alt="Gà Jollibee thơm ngon"
               />
             </div>
           </div>

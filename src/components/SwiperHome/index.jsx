@@ -22,7 +22,7 @@ function SwiperHome() {
     >
       {[...Array(imageCount)].map((_, index) => (
         <SwiperSlide key={index}>
-          <Image width={1440} height={549.67} src={imageUrl} className="w-full h-auto" />
+          <Image width={1440} height={549.67} src={imageUrl} className="w-full h-auto" alt="Gà Jollibee thơm ngon"/>
         </SwiperSlide>
       ))}
     </Swiper>
