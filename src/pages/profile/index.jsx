@@ -154,7 +154,7 @@ function Profile() {
 
   const getWard = useCallback(async (valuesDistrictCode) => {
     try {
-      if (valuesDistrictCode !== 0 && valuesDistrictCode !== undefined ) {
+      if (valuesDistrictCode && valuesDistrictCode !== 0 && valuesDistrictCode !== undefined ) {
         const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${valuesDistrictCode}`;
         const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
 
@@ -174,6 +174,7 @@ function Profile() {
   const getMe = useCallback(async () => {
     try {
       const res = await axiosClient.get("/customers");
+
       validation.setValues(res.data.payload);
     } catch (error) {
       console.log("««««« error »»»»»", error);
@@ -185,6 +186,11 @@ function Profile() {
 
   // Định dạng ngày theo chuẩn ISO 8601
   const formattedDate = birthday.format("YYYY-MM-DD");
+
+  useEffect(() => {
+    getMe();
+    getProvince();
+  }, []);
 
   useEffect(() => {
     getMe();
@@ -254,10 +260,12 @@ function Profile() {
 
     validation.setValues((prev) => ({
       ...prev,
-      wardCode: selectedWard ? selectedWard.WardCode : "",
+      // wardCode: selectedWard ? selectedWard.WardCode : "",
       wardName: selectedWard ? selectedWard.WardName : "",
     }));
   }, [validation.values.wardCode]);
+
+  
 
 
   return (
