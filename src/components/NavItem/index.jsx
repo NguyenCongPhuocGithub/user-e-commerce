@@ -4,15 +4,19 @@ import {useRouter} from "next/router";
 
 import styles from "./NavItem.module.css";
 
-function NavItem({ categories }) {
+function NavItem({ categories, showCategories, setShowCategories }) {
     const router = useRouter();
     const currentPath = router.pathname;
+    const handleShowCategories = () => {
+      setShowCategories(!showCategories);
+    };
+
   return (
-    <li >
-    <Link className={currentPath=== categories.path ? styles.current : ''} href={categories.path}>
+    <li onClick={categories.id === 3 ? handleShowCategories : null}>
+   <Link className={currentPath === categories.path ? styles.current : ''} href={categories.path}>
         {categories.label}
     </Link> 
-      {categories.child && categories.child.length > 0 ? (
+      {categories.child && categories.child.length > 0 && showCategories ? (
         <div className={styles.nav_child}> 
           {categories.child.map((child) => {
             return (
@@ -33,3 +37,4 @@ function NavItem({ categories }) {
 }
 
 export default NavItem;
+

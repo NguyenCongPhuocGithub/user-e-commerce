@@ -10,6 +10,7 @@ import React from "react";
 
 function NavigationBar() {
   const [categories, setCategories] = useState([]);
+  const [showCategories, setShowCategories] = useState(false);
 
   const getCategories = useCallback(async () => {
     try {
@@ -54,7 +55,7 @@ function NavigationBar() {
     <>
       <ul className={styles.main_navigation}>
         {resultsNavList?.map((item) => (
-          <NavItem key={item.id} categories={item} />
+          <NavItem key={item.id} categories={item}  showCategories = {showCategories} setShowCategories = {setShowCategories}/>
         ))}
       </ul>
     </>
