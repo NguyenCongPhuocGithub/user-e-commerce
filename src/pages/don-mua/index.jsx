@@ -47,6 +47,7 @@ function PurchaseOrder() {
 
   const getOrderMe = useCallback(async () => {
     try {
+      console.log('««««« pagination »»»»»', pagination);
       const response = await axiosClient.get(
         `/orders?page=${pagination.page}&pageSize=${pagination.pageSize}`
       );
@@ -59,7 +60,7 @@ function PurchaseOrder() {
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
-  }, [pagination.page, pagination.pageSize]);
+  }, [ pagination.page, pagination.pageSize]);
 
   const onChangePrevious = () => {
     setPagination((prev) => ({
@@ -113,7 +114,7 @@ function PurchaseOrder() {
 
   useEffect(() => {
     getOrderMe();
-  }, [getOrderMe]);
+  }, [getOrderMe, pagination.page]);
 
   return (
     <>
