@@ -13,7 +13,7 @@ export default function Layout({ children }) {
       {/* Cấu hình thông báo message */}
       <ToastContainer
       position="top-center"
-      autoClose={300}
+      autoClose={2000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick

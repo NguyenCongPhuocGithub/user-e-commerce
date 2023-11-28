@@ -95,8 +95,14 @@ function ChangePassword() {
         toast.success("Cập nhật mật khẩu thành công");
       } catch (error) {
         console.error(error);
-        toast.error("Cập nhật mật khẩu thất bại");
         setIsButtonDisabled(false);
+        if (error.response) {
+          // Lỗi trả về từ API
+          const errorMessage = error.response.data.error;
+          toast.error(errorMessage);
+        } else {
+          toast.error("Cập nhật mật khẩu thất bại");
+        }
       }
     },
   });

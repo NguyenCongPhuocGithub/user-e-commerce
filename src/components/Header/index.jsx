@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Delivery from "../Delivery";
 import HeaderLogo from "../HeaderLogo";
 import NavigationBar from "../NavigationBar";
-import { GiToggles } from "react-icons/gi";
+import { IoMenu } from "react-icons/io5";
 import PanelHeader from "../PanelHeader";
 import axiosClient from "@/libraries/axiosClient";
 import useCustomer from "@/hooks/useCustomer";
@@ -66,7 +66,7 @@ function Header() {
             onClick={handleShowNav}
             className="flex justify-center md:flex lg:hidden items-center"
           >
-            <GiToggles size={"40px"} color="#F6F1E6" />
+            <IoMenu size={"50px"} color="#F6F1E6" />
           </button>
           <HeaderLogo />
           <div className="hidden md:hidden lg:flex">

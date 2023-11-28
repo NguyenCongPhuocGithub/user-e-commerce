@@ -10,12 +10,19 @@ import numeral from "numeral";
 import "numeral/locales/vi";
 import Head from "next/head";
 import IsLoading from "@/components/IsLoading";
+import IsLoadingSmall from "@/components/IsLoadingSmall";
+import { toast } from "react-toastify";
 
 numeral.locale("vi");
 
 function PurchaseOrder() {
   const [orders, setOrders] = useState([]);
   const [orderDetail, setOrderDetail] = useState([]);
+  const [isButtonDisabled, setButtonDisabled] = useState({
+    delete: false,
+  });
+
+  const [isLoadingOrderId, setIsLoadingOrderId] = useState(null);
 
   const [pagination, setPagination] = useState({
     total: 0,
@@ -75,19 +82,34 @@ function PurchaseOrder() {
     setOpen(!open);
   };
 
-  const handleCancelOrderDetail = async (order) => {
+  const handleCancelOrderDetail = useCallback(async(order) => {
     const shouldCancel = window.confirm(
       "Bạn có chắc chắn muốn hủy đơn hàng này?"
     );
     if (shouldCancel) {
       try {
+        setIsLoadingOrderId(order._id);
+        setButtonDisabled((prev) => ({
+          ...prev,
+          delete: true,
+        }));
         await axiosClient.patch(`/orders/status/${order._id}?status=REJECTED`);
-        getOrderMe();
+        await getOrderMe();
+        toast.success("Hủy đơn hàng thành công");
+        setButtonDisabled((prev) => ({
+          ...prev,
+          delete: false,
+        }));
       } catch (error) {
-        console.log("««««« error »»»»»", error);
+        console.error(error);
+        toast.error("Hủy đơn hàng thất bại");
+        setButtonDisabled((prev) => ({
+          ...prev,
+          delete: true,
+        }));
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     getOrderMe();
@@ -180,8 +202,19 @@ function PurchaseOrder() {
                           <button
                             className="flex-col justify-center hover:bg-gray-400 rounded-md"
                             onClick={() => handleCancelOrderDetail(order)}
+                            disabled = {isButtonDisabled.delete}
                           >
-                            <CiTrash size="20px" />
+                            {
+                              isButtonDisabled.delete && isLoadingOrderId === order._id ?(
+                                <div
+                                className={`flex justify-center items-center`}
+                              >
+                                <IsLoadingSmall />
+                              </div>
+                              ) : (
+                                <CiTrash size={"20px"} />
+                              )
+                            }
                           </button>
                         ) : null}
                       </td>

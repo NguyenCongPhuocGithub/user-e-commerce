@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useCustomer from "@/hooks/useCustomer";
 import IsLoadingSmall from "@/components/IsLoadingSmall";
+import { data } from "autoprefixer";
 
 function Profile() {
   const router = useRouter();
@@ -58,7 +59,14 @@ function Profile() {
           return phoneRegex.test(value);
         }),
 
-      birthday: yup.date().required("Ngày sinh: vui lòng không bỏ trống"),
+      birthday: yup.date().required("Ngày sinh: vui lòng không bỏ trống")
+      .test("birthday type", "Ngày sinh không khả dụng", (value) => {
+        if (value) {
+          return value < Date.now();
+        }else{
+          return true;
+        }
+      }),
 
       provinceCode: yup.number(),
 

@@ -154,7 +154,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
           }
           setOpen(false);
           setIsCreatingOrder(false);
-          getCart();
+          await getCart();
         }
       } catch (error) {
         console.error(error);
@@ -186,7 +186,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
           delete: true,
         }));
         await axiosClient.patch("/carts/delete", values);
-        getCart();
+        await getCart();
         toast.success("Xóa sản phẩm trong giỏ hàng thành công");
         setButtonDisabled((prev) => ({
           ...prev,
@@ -261,7 +261,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                   </div>
                   {cart.products && cart.products.length > 0 ? (
                     <>
-                      <div className={styles.block_content}>
+                      <div className={`${styles.block_content}`}>
                         <div
                           className={`${styles.minicart_items_wrapper} text-center`}
                         >

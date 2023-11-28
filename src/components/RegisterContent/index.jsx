@@ -57,7 +57,15 @@ function RegisterContent() {
             /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
           return phoneRegex.test(value);
         }),
-      birthday: yup.date(),
+        birthday: yup
+        .date()
+        .test("birthday type", "Ngày sinh không khả dụng", (value) => {
+          if (value) {
+            return value < Date.now();
+          }else{
+            return true;
+          }
+        }),
     }),
 
     onSubmit: async (values) => {
@@ -68,8 +76,14 @@ function RegisterContent() {
         toast.success("Đăng ký thành công");
       } catch (error) {
         console.error(error);
-        toast.error("Đăng ký thông tin thất bại");
         setIsButtonDisabled(false);
+        if (error.response) {
+          // Lỗi trả về từ API
+          const errorMessage = error.response.data.error;
+          toast.error(errorMessage);
+        } else {
+          toast.error("Đăng ký thông tin thất bại");
+        }
       }
     },
   });
@@ -120,7 +134,7 @@ function RegisterContent() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 text-gray-700">Họ:</label>
+              <label className="block mb-1 text-gray-700">Họ</label>
               <input
                 className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
                 type="text"
@@ -138,7 +152,7 @@ function RegisterContent() {
             </div>
 
             <div>
-              <label className="block mb-1 text-gray-700">Tên:</label>
+              <label className="block mb-1 text-gray-700">Tên</label>
               <input
                 className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
                 type="text"
@@ -157,7 +171,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Email:</label>
+            <label className="block mb-1 text-gray-700">Email</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="email"
@@ -173,7 +187,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Mật khẩu:</label>
+            <label className="block mb-1 text-gray-700">Mật khẩu</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="password"
@@ -191,7 +205,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Số điện thoại:</label>
+            <label className="block mb-1 text-gray-700">Số điện thoại</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="text"
@@ -209,7 +223,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Mật khẩu:</label>
+            <label className="block mb-1 text-gray-700">Ngày sinh</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="date"
