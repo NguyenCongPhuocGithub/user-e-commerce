@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import numeral from "numeral";
@@ -8,6 +8,7 @@ import "numeral/locales/vi";
 import { toast } from "react-toastify";
 import axiosClient from "@/libraries/axiosClient";
 import withTokenCheckFunction from "../../../middleware/WithTokenCheckFunction";
+import IsLoading from "../IsLoadingSmall";
 
 numeral.locale("vi");
 
@@ -45,7 +46,7 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
     }));
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = useCallback(withTokenCheckFunction(async (valueInput) => {
     try {
       if (valueInput.quantity >= 1) {
         const values = {
@@ -66,10 +67,21 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
       } else {
         toast.warning("Vui lòng số lượng");
       }
+
+      
     } catch (error) {
       console.error(error);
+      setButtonDisabled(false);
+      // toast.error("Số lượng đặt sản phẩm vượt quá")
+      if (error.response) {
+        // Lỗi trả về từ API
+        const errorMessage = error.response.data.errors;
+        toast.error(errorMessage);
+      } else {
+        toast.error("Đã xảy ra lỗi khi thêm vào giỏ hàng");
+      }
     }
-  };
+  }), []);
 
   //Mỗi lần mở modal state thay đổi giá trị
   useEffect(() => {
@@ -135,26 +147,30 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
                 </div>
               </div>
               {/* End build form */}
-              <div className="bg-gray-50 flex-col gap-y-2">
+              <div className="bg-gray-50 flex-col gap-y-2 pb-4">
                 <div className="px-4 py-3 flex justify-start flex-row-reverse items-center gap-x-2">
-                  <div className="text-2xl font-bold flex items-center w-1/3 justify-center">
+                  <div className="text-2xl font-bold flex items-center w-full justify-end">
                     {numeral(valueInput.quantity * products.price).format(
                       "0,05$"
                     )}
                   </div>
-                </div>
-                
-                <div className="flex flex-row-reverse items-center pr-5 pb-3 h-12">
+                </div>                
+                <div className="flex flex-row-reverse items-center pr-5 pb-3 h-12 gap-x-3">
                   <button
                     type="button"
                     className="w-fit inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-                    onClick={withTokenCheckFunction(handleAddToCart)}
+                    onClick={() => handleAddToCart(valueInput)}
                     disabled={isButtonDisabled}
                   >
-                    Thêm vào giỏ hàng
+                      {isButtonDisabled ?
+                      (<div className = {`flex justify-center items-center gap-x-3`}>
+                          <IsLoading/>            
+                        <p>Thêm vào giỏ hàng</p>
+                      </div>):(<p>Thêm vào giỏ hàng</p>)
+                      }
                   </button>
 
-                  <div className="flex items-center w-1/4 justify-center h-full">
+                  <div className="flex items-center w-2/5 justify-center h-full">
                     <button
                       type="button"
                       className="bg-gray-200 text-gray-700 hover:bg-gray-400 px-3 py-1 h-full rounded-l-full focus:outline-none flex items-center justify-center"
@@ -167,7 +183,7 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
                       name="quantity"
                       value={valueInput.quantity}
                       onChange={handleInputChange}
-                      className=" w-1/3 px-3 py-2 h-full text-center bg-gray-100 "
+                      className="w-full block px-3 py-2 h-full text-center bg-gray-100"
                       // readOnly
                     />
                     <button

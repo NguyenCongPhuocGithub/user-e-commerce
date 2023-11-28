@@ -11,6 +11,7 @@ import axiosClient from "@/libraries/axiosClient";
 import useCustomer from "@/hooks/useCustomer";
 
 
+
 function Header() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
@@ -18,6 +19,12 @@ function Header() {
   // const [customer, setCustomer] = useState({});
   const customer = useCustomer((state) => state.customer);
   const setCustomer = useCustomer((state) => state.setCustomer);
+
+
+  //Thực hiện khi tham số query parameters thay đổi thực hiện thay đổi.
+  useEffect(() => {
+    setShowNav(false);
+  }, [router.asPath]);
 
   const handleShowNav = () => {
     setShowNav(!showNav);

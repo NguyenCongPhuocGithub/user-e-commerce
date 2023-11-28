@@ -7,6 +7,7 @@ import Link from "next/link";
 
 // import InputGroup from "./InputGroup";
 import axiosClient from "../../libraries/axiosClient";
+import IsLoadingSmall from "../IsLoadingSmall";
 
 function LoginContent() {
   const router = useRouter();
@@ -49,12 +50,13 @@ function LoginContent() {
   });
 
   return (
-    <div 
-    className="flex justify-center items-center bg-gray-100 p-10"
-    style={{
-      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
-      backgroundSize: "cover"
-    }}
+    <div
+      className="flex justify-center items-center bg-gray-100 p-10"
+      style={{
+        backgroundImage:
+          "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+        backgroundSize: "cover",
+      }}
     >
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <h2 className="text-2xl font-semibold mb-6 text-center">Đăng nhập</h2>
@@ -77,7 +79,7 @@ function LoginContent() {
             <label className="block mb-1 text-gray-700">Email:</label>
             <input
               type="email"
-              placeholder= "Vui lòng nhập email"
+              placeholder="Vui lòng nhập email"
               name="email"
               value={validation.values.email}
               onChange={validation.handleChange}
@@ -93,7 +95,7 @@ function LoginContent() {
             <label className="block mb-1 text-gray-700">Mật khẩu:</label>
             <input
               type="password"
-              placeholder= "Vui lòng nhập mật khẩu"
+              placeholder="Vui lòng nhập mật khẩu"
               name="password"
               value={validation.values.password}
               onChange={validation.handleChange}
@@ -101,7 +103,9 @@ function LoginContent() {
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
             />
             {validation.errors.password && validation.touched.password && (
-              <div className="text-red-500 mt-1">{validation.errors.password}</div>
+              <div className="text-red-500 mt-1">
+                {validation.errors.password}
+              </div>
             )}
           </div>
 
@@ -110,13 +114,22 @@ function LoginContent() {
             className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
             disabled={isButtonDisabled}
           >
-            Đăng nhập
+            {isButtonDisabled ? (
+              <div className={`flex justify-center items-center gap-2`}>
+                <IsLoadingSmall />
+                <p>Đăng nhập</p>
+              </div>
+            ) : (
+              <p>Đăng nhập</p>
+            )}
           </button>
 
-        <div className="flex justify-center gap-x-1">
-          <p>Đăng ký tài khoản mới</p>
-          <Link href="/register" className="text-blue-500">tại đây</Link>
-        </div>
+          <div className="flex justify-center gap-x-1">
+            <p>Đăng ký tài khoản mới</p>
+            <Link href="/register" className="text-blue-500">
+              tại đây
+            </Link>
+          </div>
         </form>
       </div>
     </div>

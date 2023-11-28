@@ -10,7 +10,7 @@ import React from "react";
 
 function NavigationBar() {
   const [categories, setCategories] = useState([]);
-  const [showCategories, setShowCategories] = useState(false);
+  const [showCategories, setShowCategories] = useState(true);
 
   const getCategories = useCallback(async () => {
     try {

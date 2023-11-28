@@ -11,6 +11,7 @@ import withTokenCheckComponent from "../../../middleware/withTokenCheckComponent
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useCustomer from "@/hooks/useCustomer";
+import IsLoadingSmall from "@/components/IsLoadingSmall";
 
 function Profile() {
   const router = useRouter();
@@ -89,7 +90,7 @@ function Profile() {
         //   "wardCode type",
         //   "Mã phường: vui lòng chọn mã quận trước",
         //   (value, context) => {
-        //     if (context.parent.districtCode) {
+        //     if (context.parent.districtCode != 0) {
         //       return true;
         //     }
         //   }
@@ -106,8 +107,9 @@ function Profile() {
         setIsButtonDisabled(true);
         await axiosClient.patch("/customers", values);
         setCustomer(values);
-        router.push("/");
+        router.back();
         toast.success("Cập nhật thông tin thành công");
+        setIsButtonDisabled(false);
       } catch (error) {
         console.error(error);
         toast.error("Cập nhật thông tin thất bại thất bại");
@@ -265,9 +267,6 @@ function Profile() {
     }));
   }, [validation.values.wardCode]);
 
-  
-
-
   return (
     <>
       <Head>
@@ -288,66 +287,70 @@ function Profile() {
           onSubmit={validation.handleSubmit}
           className="w-full max-w-sm px-4 bg-white p-6 rounded-lg"
         >
-          <div className="mb-4">
-            <label
-              htmlFor="firstName"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Họ:
-              <input
-                type="text"
-                placeholder="Vui lòng nhập thông tin họ"
-                name="firstName"
-                value={validation.values.firstName}
-                onChange={validation.handleChange}
-                onBlur={validation.handleBlur}
-                className={`${
-                  validation.errors.firstName && validation.touched.firstName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-              />
-            </label>
-            {validation.errors.firstName && validation.touched.firstName && (
-              <div className="text-red-500 text-xs italic">
-                {validation.errors.firstName}
-              </div>
-            )}
+
+          <div className=" flex flex-col md:flex-row lg:flex-row md:gap-x-3 lg:gap-x-3">
+            <div className="mb-4">
+              <label
+                htmlFor="firstName"
+                className="block text-gray-700 text-sm mb-2"
+              >
+                <p className = {`font-bold`}>Họ</p>
+                <input
+                  type="text"
+                  placeholder="Vui lòng nhập thông tin họ"
+                  name="firstName"
+                  value={validation.values.firstName}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  className={`${
+                    validation.errors.firstName && validation.touched.firstName
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                />
+              </label>
+              {validation.errors.firstName && validation.touched.firstName && (
+                <div className="text-red-500 text-xs italic">
+                  {validation.errors.firstName}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="lastName"
+                className="block text-gray-700 text-sm mb-2"
+              >
+                <p className = {`font-bold`}>Tên</p>
+                <input
+                  type="text"
+                  placeholder="Vui lòng nhập thông tin tên"
+                  name="lastName"
+                  value={validation.values.lastName}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  className={`${
+                    validation.errors.lastName && validation.touched.lastName
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                />
+              </label>
+              {validation.errors.lastName && validation.touched.lastName && (
+                <div className="text-red-500 text-xs italic">
+                  {validation.errors.lastName}
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="lastName"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Tên:
-              <input
-                type="text"
-                placeholder="Vui lòng nhập thông tin tên"
-                name="lastName"
-                value={validation.values.lastName}
-                onChange={validation.handleChange}
-                onBlur={validation.handleBlur}
-                className={`${
-                  validation.errors.lastName && validation.touched.lastName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-              />
-            </label>
-            {validation.errors.lastName && validation.touched.lastName && (
-              <div className="text-red-500 text-xs italic">
-                {validation.errors.lastName}
-              </div>
-            )}
-          </div>
 
           <div className="mb-4">
             <label
               htmlFor="phoneNumber"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Số điện thoại:
+              <p className = {`font-bold`}>Số điện thoại</p>
               <input
                 type="text"
                 placeholder="Vui lòng nhập thông tin số điện thoại"
@@ -374,9 +377,9 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="birthday"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Ngày sinh:
+              <p className = {`font-bold`}>Ngày sinh</p>
               <input
                 type="date"
                 placeholder="Vui lòng nhập thông tin ngày sinh"
@@ -401,9 +404,9 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="provinceCode"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Tỉnh thành
+              <p className = {`font-bold`}>Tỉnh Thành</p>
               <select
                 name="provinceCode"
                 value={validation.values.provinceCode}
@@ -442,9 +445,9 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="districtCode"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Quận
+              <p className = {`font-bold`}>Quận</p>
               <select
                 name="districtCode"
                 value={validation.values.districtCode}
@@ -483,9 +486,9 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="wardCode"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Phường
+              <p className = {`font-bold`}>Phường</p>
               <select
                 name="wardCode"
                 value={validation.values.wardCode}
@@ -518,9 +521,9 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="address"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm mb-2"
             >
-              Địa chỉ:
+             <p className = {`font-bold`}>Địa chỉ</p>
               <input
                 type="text"
                 placeholder="Vui lòng nhập thông tin địa chỉ"
@@ -547,7 +550,14 @@ function Profile() {
             className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
             disabled={isButtonDisabled}
           >
-            Cập nhật thông tin
+            {isButtonDisabled ? (
+              <div className={`flex justify-center items-center gap-2`}>
+                <IsLoadingSmall />
+                <p>Cập nhật thông tin</p>
+              </div>
+            ) : (
+              <p>Cập nhật thông tin</p>
+            )}
           </button>
         </form>
       </div>

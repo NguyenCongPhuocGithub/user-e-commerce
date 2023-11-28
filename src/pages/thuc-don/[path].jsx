@@ -3,12 +3,12 @@ import React from "react";
 import Head from "next/head";
 import slugify from "slugify";
 import { BsCart4 } from "react-icons/bs";
-// import PropTypes from 'prop-types';
 
 import axiosClient from "@/libraries/axiosClient";
 import ProductContent from "@/components/ProductContent";
 import styles from "../styles/thuc-don.module.css";
 import ModalCart from "@/components/ModalCart";
+import IsLoading from "@/components/IsLoading";
 
 function ProductList(props) {
   const { products, categoryName } = props;
@@ -41,7 +41,7 @@ function ProductList(props) {
     <>
       <Head>
         <title>{categoryName}</title>
-        <meta name="description" content= {`Jollibee ${categoryName}`}/>
+        <meta name="description" content={`Jollibee ${categoryName}`} />
         <meta name="viewport" content={`Jollibee ${categoryName}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -57,20 +57,24 @@ function ProductList(props) {
           position: "relative",
         }}
       >
-        {products && (
+        {products && products.length > 0 ? (
           <div className={`container mx-auto px-4 md:px-6 lg:px-8 `}>
             <div className={`${styles.product_wrapper} py-4 md:py-6 lg:py-8`}>
               <ul
                 className={`${styles.product_list} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}
               >
-                {products.map((item, index) => (
-                  <ProductContent
-                    key={item._id}
-                    products={item}
-                    getCart={getCart}
-                    index={index}
-                  />
-                ))}
+                {products.length === 0 ? (
+                  <IsLoading />
+                ) : (
+                  products.map((item, index) => (
+                    <ProductContent
+                      key={item._id}
+                      products={item}
+                      getCart={getCart}
+                      index={index}
+                    />
+                  ))
+                )}
               </ul>
             </div>
             <div className={`${styles.minicart_wrapper} flex justify-end`}>
@@ -105,6 +109,14 @@ function ProductList(props) {
               getCart={getCart}
             />
           </div>
+        ) : (
+          <>
+            <div
+              className={`container mx-auto flex justify-center items-center px-4 md:px-6 lg:px-8 `}
+            >
+              <IsLoading />
+            </div>
+          </>
         )}
       </div>
     </>

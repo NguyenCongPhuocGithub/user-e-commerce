@@ -7,6 +7,7 @@ import ModalAddToCart from "./modalAddToCart";
 import numeral from "numeral";
 import "numeral/locales/vi";
 numeral.locale("vi");
+import IsLoading from "@/components/IsLoading";
 
 function ProductContent({ products, getCart, index }) {
   const [open, setOpen] = useState(false);
@@ -23,13 +24,17 @@ function ProductContent({ products, getCart, index }) {
         <div className={`${styles.product_item_info} flex flex-col gap-y-6`}>
           <div className="flex justify-center items-center">
             <div className={`${styles.product_image_wrapper} w-3/4 h-auto`}>
-              <Image
-                width={200}
-                height={200}
-                src={products.media.coverImageUrl}
-                className="w-full"
-                alt="Gà Jollibee thơm ngon"
-              />
+              {products && products.media.coverImageUrl ? (
+                <Image
+                  width={200}
+                  height={200}
+                  src={products.media.coverImageUrl}
+                  className="w-full"
+                  alt="Gà Jollibee thơm ngon"
+                />
+              ) : (
+                <IsLoading/>
+              )}
             </div>
           </div>
           <div
@@ -46,20 +51,22 @@ function ProductContent({ products, getCart, index }) {
               <span>{`${numeral(products.price).format("0,05$")}`}</span>
               {products.discount !== 0 && products.discount ? (
                 <div>
-                  <span className = {`text-yellow-500`}>Giảm: {products.discount} %</span>
+                  <span className={`text-yellow-500`}>
+                    Giảm: {products.discount} %
+                  </span>
                 </div>
               ) : null}
             </div>
-              <div className={`${styles.product_item_actions} w-2/4 h-auto`}>
-                <button
-                  type="submit"
-                  title="Đặt hàng"
-                  className="action_tocart bg-red-700 hover:bg-red-800 text-white font-semibold py-4 px-6 rounded-2xl transition duration-300 w-full text-xl"
-                  onClick={handleAddToCart}
-                >
-                  <span>Đặt hàng</span>
-                </button>
-              </div>
+            <div className={`${styles.product_item_actions} w-2/4 h-auto`}>
+              <button
+                type="submit"
+                title="Đặt hàng"
+                className="action_tocart bg-red-700 hover:bg-red-800 text-white font-semibold py-4 px-6 rounded-2xl transition duration-300 w-full text-xl"
+                onClick={handleAddToCart}
+              >
+                <span>Đặt hàng</span>
+              </button>
+            </div>
           </div>
         </div>
       </li>

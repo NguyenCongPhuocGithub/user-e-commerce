@@ -6,6 +6,7 @@ import Head from "next/head";
 import axiosClient from "@/libraries/axiosClient";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import IsLoadingSmall from "@/components/IsLoadingSmall";
 
 function ChangePassword() {
   const router = useRouter();
@@ -192,7 +193,14 @@ function ChangePassword() {
             className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded w-full"
             disabled={isButtonDisabled}
           >
-            Thay đổi mật khẩu
+            {isButtonDisabled ? (
+              <div className={`flex justify-center items-center gap-2`}>
+                <IsLoadingSmall />
+                <p>Thay đổi mật khẩu</p>
+              </div>
+            ) : (
+              <p>Thay đổi mật khẩu</p>
+            )}
           </button>
         </form>
       </div>

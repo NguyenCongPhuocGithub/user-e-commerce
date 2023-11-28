@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 // import InputGroup from "./InputGroup";
 import axiosClient from "../../libraries/axiosClient";
+import IsLoadingSmall from "../IsLoadingSmall";
 
 function RegisterContent() {
   const router = useRouter();
@@ -231,7 +232,14 @@ function RegisterContent() {
               className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
               disabled={isButtonDisabled}
             >
-              Đăng ký
+            {isButtonDisabled ? (
+              <div className={`flex justify-center items-center gap-2`}>
+                <IsLoadingSmall />
+                <p>Đăng ký</p>
+              </div>
+            ) : (
+              <p>Đăng ký</p>
+            )}
             </button>
           </div>
         </form>

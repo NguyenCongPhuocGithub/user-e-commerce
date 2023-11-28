@@ -9,6 +9,7 @@ import Image from "next/image";
 import numeral from "numeral";
 import "numeral/locales/vi";
 import Head from "next/head";
+import IsLoading from "@/components/IsLoading";
 
 numeral.locale("vi");
 
@@ -100,6 +101,7 @@ function PurchaseOrder() {
         <meta name="viewport" content="Thông tin đơn hàng Jollibee" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div
         className={`p-4 md:p-6 lg:p-6`}
         style={{
@@ -110,123 +112,137 @@ function PurchaseOrder() {
       >
         <h3 className="text-2xl font-bold text-center p-6">Đơn hàng của tôi</h3>
         <div className="overflow-x-auto text-center">
-          <table className=" min-w-full border-2 border-gray-300">
-            <thead>
-              <tr>
-                <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                  Stt
-                </th>
-                <th className="border-b-2 border-gray-300 p-2">Mã đơn hàng</th>
-                <th className="border-b-2 border-gray-300 p-2">Trạng thái</th>
-                <th className="border-b-2 border-gray-300 p-2">Hủy đơn hàng</th>
-                <th className="border-b-2 border-gray-300 p-2 hidden md:hidden lg:table-cell">
-                  Hình thức mua hàng
-                </th>
-                <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                  Ngày tạo đơn
-                </th>
-                <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                  Ngày dự kiến giao hàng
-                </th>
-                <th className="border-b-2 border-gray-300 p-2">Thanh toán</th>
-                {/* Thêm tiêu đề cho các cột khác của đơn hàng */}
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <tr key={order._id}>
-                  <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                    <span>
-                      {index + 1 + pagination.pageSize * (pagination.page - 1)}
-                    </span>
-                  </td>
-                  <td className="border-b border-gray-300 p-2">
-                    <Link href="" onClick={() => handleChangeStatus(order)}>
-                      {order._id}
-                    </Link>
-                  </td>
-
-                  <td className="border-b border-gray-300 p-2">
-                    <span
-                      className={`inline-block px-2 py-1 w-full rounded text-white ${
-                        order.status === "PLACED"
-                          ? "bg-blue-500"
-                          : order.status === "COMPLETED"
-                          ? "bg-green-500"
-                          : order.status === "DELIVERING"
-                          ? "bg-orange-500"
-                          : order.status === "PREPARED"
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                      }`}
-                    >
-                      {statusMapping[order.status]}
-                    </span>
-                  </td>
-
-                  <td className="border-b border-gray-300 p-2 ">
-                    {order.status === "PLACED" ||
-                    order.status === "PREPARING" ? (
-                      <button
-                        className="flex-col justify-center hover:bg-gray-400 rounded-md"
-                        onClick={() => handleCancelOrderDetail(order)}
-                      >
-                        <CiTrash size="20px" />
-                      </button>
-                    ) : null}
-                  </td>
-                  <td className="border-b border-gray-300 p-2 hidden md:hidden lg:table-cell">
-                    <td className="border-gray-300 p-2 flex justify-center">
-                      {order.isOnline && order.isOnline === true ? (
-                        <span>Trực tuyến</span>
-                      ) : (
-                        <span>Mua tại cửa hàng</span>
-                      )}
-                    </td>
-                  </td>
-
-                  <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                    <span>{`${new Date(
-                      order.createdDate
-                    ).toLocaleDateString()}`}</span>
-                  </td>
-                  {order.status === "COMPLETED" ? (
-                    <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                      <span>{`${new Date(
-                        order.updatedAt
-                      ).toLocaleDateString()}`}</span>
-                    </td>
-                  ) : order.status === "REJECTED" ||
-                    order.status === "FLAKER" ? (
-                    <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                      _____
-                    </td>
-                  ) : (
-                    <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
-                      <span>{`${new Date(
-                        order.shippedDate
-                      ).toLocaleDateString()}`}</span>
-                    </td>
-                  )}
-
-                  <td className="border-b border-gray-300 px-4 py-2">
-                    <span className="flex justify-end">{`${numeral(
-                      order.productList.reduce(
-                        (acc, product) =>
-                          acc +
-                          product.price *
-                            product.quantity *
-                            (1 - product.discount / 100),
-                        0
-                      ) + order.totalFee
-                    ).format("0,05$")}`}</span>
-                  </td>
-
-                  {/* Hiển thị các thông tin khác của đơn hàng */}
+          {orders && orders.length > 0 ? (
+            <table className=" min-w-full border-2 border-gray-300">
+              <thead>
+                <tr>
+                  <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                    Stt
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2">
+                    Mã đơn hàng
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2">Trạng thái</th>
+                  <th className="border-b-2 border-gray-300 p-2">
+                    Hủy đơn hàng
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2 hidden md:hidden lg:table-cell">
+                    Hình thức mua hàng
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                    Ngày tạo đơn
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                    Ngày dự kiến giao hàng
+                  </th>
+                  <th className="border-b-2 border-gray-300 p-2">Thanh toán</th>
+                  {/* Thêm tiêu đề cho các cột khác của đơn hàng */}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              {orders && (
+                <tbody>
+                  {orders.map((order, index) => (
+                    <tr key={order._id}>
+                      <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                        <span>
+                          {index +
+                            1 +
+                            pagination.pageSize * (pagination.page - 1)}
+                        </span>
+                      </td>
+                      <td className="border-b border-gray-300 p-2">
+                        <Link href="" onClick={() => handleChangeStatus(order)}>
+                          {order._id}
+                        </Link>
+                      </td>
+
+                      <td className="border-b border-gray-300 p-2">
+                        <span
+                          className={`inline-block px-2 py-1 w-full rounded text-white ${
+                            order.status === "PLACED"
+                              ? "bg-blue-500"
+                              : order.status === "COMPLETED"
+                              ? "bg-green-500"
+                              : order.status === "DELIVERING"
+                              ? "bg-orange-500"
+                              : order.status === "PREPARED"
+                              ? "bg-yellow-500"
+                              : "bg-red-500"
+                          }`}
+                        >
+                          {statusMapping[order.status]}
+                        </span>
+                      </td>
+
+                      <td className="border-b border-gray-300 p-2 ">
+                        {order.status === "PLACED" ||
+                        order.status === "PREPARING" ? (
+                          <button
+                            className="flex-col justify-center hover:bg-gray-400 rounded-md"
+                            onClick={() => handleCancelOrderDetail(order)}
+                          >
+                            <CiTrash size="20px" />
+                          </button>
+                        ) : null}
+                      </td>
+                      <td className="border-b border-gray-300 p-2 hidden md:hidden lg:table-cell">
+                        <td className="border-gray-300 p-2 flex justify-center">
+                          {order.isOnline && order.isOnline === true ? (
+                            <span>Trực tuyến</span>
+                          ) : (
+                            <span>Mua tại cửa hàng</span>
+                          )}
+                        </td>
+                      </td>
+
+                      <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                        <span>{`${new Date(
+                          order.createdDate
+                        ).toLocaleDateString()}`}</span>
+                      </td>
+                      {order.status === "COMPLETED" ? (
+                        <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                          <span>{`${new Date(
+                            order.updatedAt
+                          ).toLocaleDateString()}`}</span>
+                        </td>
+                      ) : order.status === "REJECTED" ||
+                        order.status === "FLAKER" ? (
+                        <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                          _____
+                        </td>
+                      ) : (
+                        <td className="border-b border-gray-300 p-2 hidden md:table-cell lg:table-cell">
+                          <span>{`${new Date(
+                            order.shippedDate
+                          ).toLocaleDateString()}`}</span>
+                        </td>
+                      )}
+
+                      <td className="border-b border-gray-300 px-4 py-2">
+                        <span className="flex justify-end">{`${numeral(
+                          order.productList.reduce(
+                            (acc, product) =>
+                              acc +
+                              product.price *
+                                product.quantity *
+                                (1 - product.discount / 100),
+                            0
+                          ) + order.totalFee
+                        ).format("0,05$")}`}</span>
+                      </td>
+
+                      {/* Hiển thị các thông tin khác của đơn hàng */}
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          ) : (
+            <div className={`flex justify-center items-center`}>
+              <IsLoading />
+            </div>
+          )}
         </div>
 
         {/* Build UI pagination */}
@@ -418,59 +434,6 @@ function PurchaseOrder() {
                                 ))}
                               </tbody>
                             </table>
-
-                            {/* <div className="flex flex-col justify-center items-end gap-3">
-                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
-                              <div className="font-bold">Tổng tiền:</div>
-                              <span>
-                                {`${numeral(
-                                  orderDetail.productList.reduce(
-                                    (acc, product) =>
-                                      acc + product.price * product.quantity,
-                                    0
-                                  )
-                                ).format("0,05$")}`}
-                              </span>
-                            </div>
-                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
-                              <div className="font-bold">Giảm giá</div>
-                              <span>
-                                {`${numeral(
-                                  orderDetail.productList.reduce(
-                                    (acc, product) =>
-                                      acc +
-                                      (product.price *
-                                        product.quantity *
-                                        product.discount) /
-                                        100,
-                                    0
-                                  )
-                                ).format("0,05$")}`}
-                              </span>
-                            </div>
-                            <div className= "flex w-2/3 md:w-2/5 lg:w-1/4 justify-between">
-                              <div className="font-bold">Phí vận chuyển:</div>
-                              <span>
-                                {numeral(orderDetail.totalFee).format("0,05$")}
-                              </span>
-                            </div>
-                            <div className= "flex items-center justify-between w-2/3 md:w-2/5 lg:w-1/4 ">
-                              <div className="font-bold">Tổng tiền</div>
-                              <span className = "text-xl font-bold text-red-600">
-                                {`${numeral(
-                                  orderDetail.productList.reduce(
-                                    (acc, product) =>
-                                      acc +
-                                      product.price *
-                                        product.quantity *
-                                        (1 - product.discount / 100),
-                                    0
-                                  ) + orderDetail.totalFee
-                                ).format("0,05$")}`}
-                              </span>
-                            </div>
-                          </div> */}
-
                             <div className="flex flex-row-reverse text-base md:text-lg lg:text-xl">
                               <div
                                 className={`flex flex-col gap-y-2 font-sans w-4/5 md:w-4/5 lg:w-3/5 items-end px-4 py-3`}
