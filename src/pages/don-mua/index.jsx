@@ -114,7 +114,7 @@ function PurchaseOrder() {
 
   useEffect(() => {
     getOrderMe();
-  }, [getOrderMe, pagination.page]);
+  }, [getOrderMe]);
 
   return (
     <>
