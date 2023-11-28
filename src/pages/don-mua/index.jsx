@@ -60,7 +60,7 @@ function PurchaseOrder() {
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
-  }, [ pagination.page, pagination.pageSize]);
+  }, [pagination.page, pagination.pageSize]);
 
   const onChangePrevious = () => {
     setPagination((prev) => ({
@@ -110,7 +110,7 @@ function PurchaseOrder() {
         }));
       }
     }
-  }, []);
+  }, [getOrderMe]);
 
   useEffect(() => {
     getOrderMe();
