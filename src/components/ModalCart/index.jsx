@@ -273,13 +273,13 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                 <th className="border-b-2 border-gray-300 px-4 py-2">
                                   Sản phẩm
                                 </th>
-                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                <th className="border-b-2 border-gray-300 px-3 py-2">
                                   Số lượng
                                 </th>
-                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                <th className="border-b-2 border-gray-300 px-2 py-2">
                                   Giá
                                 </th>
-                                <th className="border-b-2 border-gray-300 px-4 py-2">
+                                <th className="border-b-2 border-gray-300 pr-3 py-2">
                                   Xóa
                                 </th>
                                 {/* Thêm tiêu đề cho các cột khác của đơn hàng */}
@@ -308,14 +308,14 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                             className="w-1/3 h-auto rounded-lg"
                                           />
                                           <p
-                                            className={`${styles.product_item_name} text-sm md:text-sm lg:text-lg w-full`}
+                                            className={`${styles.product_item_name} text-xs md:text-base lg:text-lg w-full`}
                                           >
                                             {item.name}
                                           </p>
                                         </div>
                                       </td>
 
-                                      <td className={`${styles.quantity}`}>
+                                      <td className={`${styles.quantity} text-xs md:text-base lg:text-lg`}>
                                         <div className="flex items-center justify-center w-full h-8">
                                           <button
                                             type="button"
@@ -359,7 +359,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                                           className={`${styles.price_wrapper} w-full`}
                                         >
                                           <div
-                                            className={`${styles.minicart_price} flex justify-center items-end font-bold text-lg`}
+                                            className={`${styles.minicart_price} flex justify-center items-end font-bold text-xs md:text-base lg:text-lg`}
                                           >
                                             {numeral(
                                               item.price * item.quantity -
@@ -469,7 +469,7 @@ function ModalCart({ open, setOpen, getCart, cart, setCart }) {
                       </div>
                     </>
                   ) : (
-                    <div className="flex justify-center items-center font-bold text-lg px-20 py-10">
+                    <div className="flex justify-center items-center font-bold text-sm md:text-base lg:text-lg px-10 md:px-20 lg:px-20 py-10">
                       Giỏ hàng hiện chưa có sản phẩm
                     </div>
                   )}
