@@ -123,6 +123,7 @@ function PurchaseOrder() {
         <meta name="description" content="Thông tin đơn hàng Jollibee" />
         <meta name="viewport" content="Thông tin đơn hàng Jollibee" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <div
@@ -178,7 +179,7 @@ function PurchaseOrder() {
                           {order._id}
                         </Link>
                       </td>
-
+                      
                       <td className="border-b border-gray-300 p-2">
                         <span
                           className={`inline-block px-2 py-1 w-full rounded text-white ${

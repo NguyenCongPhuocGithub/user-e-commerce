@@ -282,6 +282,7 @@ function Profile() {
         <meta name="description" content="Thông tin cá nhân" />
         <meta name="viewport" content="Thông tin cá nhân" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div
         className="flex items-center justify-center shadow-md bg-gray-100 py-8"

@@ -22,6 +22,7 @@ function Register() {
         <meta name="description" content="Đăng ký Jollibee" />
         <meta name="viewport" content="Đăng ký Jollibee" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       {isLogin ? null : <RegisterContent />}
     </>

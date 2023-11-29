@@ -114,6 +114,7 @@ function ChangePassword() {
         <meta name="description" content="Thay đổi mật khẩu Jollibee" />
         <meta name="viewport" content="Thay đổi mật khẩu Jollibee" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div
         className="flex items-center justify-center shadow-md bg-gray-100 py-8"

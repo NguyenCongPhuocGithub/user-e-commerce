@@ -44,6 +44,7 @@ function ProductList(props) {
         <meta name="description" content={`Jollibee ${categoryName}`} />
         <meta name="viewport" content={`Jollibee ${categoryName}`} />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div
         style={{
