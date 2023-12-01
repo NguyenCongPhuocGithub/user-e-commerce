@@ -406,7 +406,7 @@ function PurchaseOrder() {
                         Array.isArray(orderDetail.productList) &&
                         orderDetail.productList.length > 0 ? (
                           <div>
-                            <table className="mb-5">
+                            <table className="mb-5 text-xs md:text-lg lg:text-xl">
                               <thead>
                                 <tr className="text-center">
                                   <th className="border-b-2 border-gray-300 px-4 py-2 w-1/2 md:w-1/3 lg:w-1/3">
@@ -439,18 +439,18 @@ function PurchaseOrder() {
                                           height={80}
                                           className={`w-full h-auto md:w-1/3 lg:w-1/4 rounded-lg`}
                                         />
-                                        <div className={`text-center`}>
+                                        <div>
                                           <p>{item.name}</p>
                                         </div>
                                       </div>
                                     </td>
-                                    <td className="text-center text-sm md:text-lg lg:text-xl">
+                                    <td className="text-center">
                                       <div>{item.quantity}</div>
                                     </td>
-                                    <td className="text-right md:text-lg lg:text-xl">
+                                    <td className="text-right">
                                       {numeral(item.price).format("0,05$")}
                                     </td>
-                                    <td className="text-right md:text-lg lg:text-xl">
+                                    <td className="text-right">
                                       {numeral(
                                         (item.price *
                                           item.discount *
@@ -458,7 +458,7 @@ function PurchaseOrder() {
                                           100
                                       ).format("0,05$")}
                                     </td>
-                                    <td className="text-right md:text-lg lg:text-xl">
+                                    <td className="text-right">
                                       {numeral(
                                         item.price *
                                           item.quantity *
