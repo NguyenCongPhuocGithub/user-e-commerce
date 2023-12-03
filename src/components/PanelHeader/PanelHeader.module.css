@@ -36,8 +36,11 @@
 .language_original, .language_foreign {
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
+    column-gap: 8px;
 }
+
 
 .language_original{
     margin-right: 10px;
@@ -49,8 +52,8 @@
 }
 
 .img{
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
 }
 
 /* End config css language */

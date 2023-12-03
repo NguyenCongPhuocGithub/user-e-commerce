@@ -18,7 +18,7 @@ function PanelHeader({customer, isLogin}) {
               alt=""
             />
           </div>
-          <div className={`${styles.header_panel} `}>
+          <div className={`${styles.header_panel}`}>
             <div className={styles.language}>
               <div className={styles.language_original}>
                 <img

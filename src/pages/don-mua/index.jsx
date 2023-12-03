@@ -134,7 +134,7 @@ function PurchaseOrder() {
           backgroundSize: "cover",
         }}
       >
-        <h3 className="font-bold text-center p-6 text-5xl">Đơn hàng của tôi</h3>
+        <h3 className="font-bold text-center p-6 text-3xl md:text-5xl lg:text-5xl">Đơn hàng của tôi</h3>
         <div className="overflow-x-auto text-center">
           {orders && orders.length > 0 ? (
             <table className=" min-w-full border-2 border-gray-300">
@@ -283,7 +283,7 @@ function PurchaseOrder() {
         {/* Build UI pagination */}
         <div className="flex flex-col items-center gap-y-3 border-t border-gray-200 bg-white px-4 py-3">
           <div>
-            <p className="text-sm text-gray-700">
+            <p className="text-gray-700">
               Hiển thị{" "}
               <span className="font-medium">
                 {(pagination.page - 1) * pagination.pageSize + 1}
@@ -315,7 +315,7 @@ function PurchaseOrder() {
               </button>
 
               {/* Previous button */}
-              <span className="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset bg-indigo-600 text-white focus:outline-offset-0">
+              <span className="relative z-10 inline-flex items-center px-4 py-2 font-semibold ring-1 ring-inset bg-indigo-600 text-white focus:outline-offset-0">
                 {pagination.page}
               </span>
 

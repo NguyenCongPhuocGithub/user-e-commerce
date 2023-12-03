@@ -11,6 +11,7 @@
 
 .main_navigation li{
     padding: 12px 10px;
+    font-size: 26px;
 }
 
 .main_navigation li:hover{
