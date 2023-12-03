@@ -134,7 +134,7 @@ function PurchaseOrder() {
           backgroundSize: "cover",
         }}
       >
-        <h3 className="font-bold text-center p-6 text-3xl md:text-5xl lg:text-5xl">Đơn hàng của tôi</h3>
+        <h3 className="font-bold text-center p-6 text-4xl">Đơn hàng của tôi</h3>
         <div className="overflow-x-auto text-center">
           {orders && orders.length > 0 ? (
             <table className=" min-w-full border-2 border-gray-300">

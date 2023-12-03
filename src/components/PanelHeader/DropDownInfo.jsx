@@ -46,7 +46,7 @@ function DropDownInfo({customer}) {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 w-56 origin-top-right rounded-md bg-white ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1 text-base md:text-lg lg:text-xl">
+          <div className="py-1 text-lg md:text-xl lg:text-xl">
             <Menu.Item>
               {({ active }) => (
                 <Link
