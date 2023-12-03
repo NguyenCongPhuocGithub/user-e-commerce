@@ -11,7 +11,7 @@ function PanelHeader({customer, isLogin}) {
   return (
     <>
       <div className={`${styles.wrapper_panel}`}>
-        <div className= {`${styles.wrapper_panel_content}`}>
+        <div className= {`${styles.wrapper_panel_content} text-base md:text-lg lg:text-2xl`}>
           <div>
             <img
               src="https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/en_US/images/bg-header.png"

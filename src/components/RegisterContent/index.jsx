@@ -96,8 +96,8 @@ function RegisterContent() {
       backgroundSize: "cover"
     }}
     >
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Đăng ký</h2>
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-base md:text-lg lg:text-2xl">
+        <h2 className="text-4xl font-semibold mb-6 text-center">Đăng ký</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
           {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <InputGroup label="Họ" name="firstName" validation={validation} />
@@ -134,7 +134,7 @@ function RegisterContent() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 text-gray-700">Họ</label>
+              <label className="block mb-1 text-gray-700 font-bold">Họ</label>
               <input
                 className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
                 type="text"
@@ -152,7 +152,7 @@ function RegisterContent() {
             </div>
 
             <div>
-              <label className="block mb-1 text-gray-700">Tên</label>
+              <label className="block mb-1 text-gray-700 font-bold">Tên</label>
               <input
                 className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
                 type="text"
@@ -171,7 +171,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Email</label>
+            <label className="block mb-1 text-gray-700 font-bold">Email</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="email"
@@ -187,7 +187,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Mật khẩu</label>
+            <label className="block mb-1 text-gray-700 font-bold">Mật khẩu</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="password"
@@ -205,7 +205,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Số điện thoại</label>
+            <label className="block mb-1 text-gray-700 font-bold">Số điện thoại</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="text"
@@ -223,7 +223,7 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Ngày sinh</label>
+            <label className="block mb-1 text-gray-700 font-bold">Ngày sinh</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="date"

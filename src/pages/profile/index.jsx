@@ -294,14 +294,14 @@ function Profile() {
       >
         <form
           onSubmit={validation.handleSubmit}
-          className="w-full max-w-sm px-4 bg-white p-6 rounded-lg"
+          className="w-full max-w-sm px-4 bg-white p-6 rounded-lg text-base md:text-lg lg:text-xl"
         >
 
           <div className=" flex flex-col md:flex-row lg:flex-row md:gap-x-3 lg:gap-x-3">
-            <div className="mb-4">
+            <div className="mb-4 w-full md:w-1/2 lg:w-1/2">
               <label
                 htmlFor="firstName"
-                className="block text-gray-700 text-sm mb-2"
+                className="block text-gray-700 mb-2"
               >
                 <p className = {`font-bold`}>Họ</p>
                 <input
@@ -325,10 +325,10 @@ function Profile() {
               )}
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 w-full md:w-1/2 lg:w-1/2">
               <label
                 htmlFor="lastName"
-                className="block text-gray-700 text-sm mb-2"
+                className="block text-gray-700 mb-2"
               >
                 <p className = {`font-bold`}>Tên</p>
                 <input
@@ -357,7 +357,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="phoneNumber"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
               <p className = {`font-bold`}>Số điện thoại</p>
               <input
@@ -386,7 +386,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="birthday"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
               <p className = {`font-bold`}>Ngày sinh</p>
               <input
@@ -413,7 +413,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="provinceCode"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
               <p className = {`font-bold`}>Tỉnh Thành</p>
               <select
@@ -454,7 +454,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="districtCode"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
               <p className = {`font-bold`}>Quận</p>
               <select
@@ -495,7 +495,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="wardCode"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
               <p className = {`font-bold`}>Phường</p>
               <select
@@ -530,7 +530,7 @@ function Profile() {
           <div className="mb-4">
             <label
               htmlFor="address"
-              className="block text-gray-700 text-sm mb-2"
+              className="block text-gray-700 mb-2"
             >
              <p className = {`font-bold`}>Địa chỉ</p>
               <input

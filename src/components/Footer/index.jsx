@@ -68,7 +68,7 @@ function Footer() {
                 </li>
               </ul>
             </div>
-            <div className={` p-3`}>
+            <div className={`p-3`}>
               <p className = {`text-uppercase ${styles.title}`}>Hãy liên kết với chúng tôi</p>
               <div className = {styles.block_social}>
                 <a className = {styles.btn_icon} href="https://www.facebook.com/JollibeeVietnam" >

@@ -61,7 +61,7 @@ function Header() {
       <PanelHeader customer = {customer} isLogin = {isLogin}/>
       
       <div className="container mx-auto">
-        <div className={styles.header_content}>
+        <div className={`${styles.header_content} text-base md:text-lg lg:text-2xl`}>
           <button
             onClick={handleShowNav}
             className="flex justify-center md:flex lg:hidden items-center"

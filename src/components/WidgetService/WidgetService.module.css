@@ -10,14 +10,14 @@
 }
 
 .widget_service_wrapper .title_wrapper .title{
-    font-size: 36px;
+    font-size: 65px;
     color: #e31837;
     text-transform: uppercase;
 }
 
 .widget_service_wrapper .title_wrapper .description{
-    font-size: 21px;
-    text-transform: uppercase;
+    font-size: 30px;
+    /* text-transform: uppercase; */
     color: #000;
 }
 
@@ -80,6 +80,7 @@
     cursor: pointer;
     vertical-align: middle;
     font-weight: 600;
+    font-size: 26px;
 
 }
 

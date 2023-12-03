@@ -15,7 +15,7 @@
 }
 
 .intro_wrapper .intro{
-    max-width: 234px;
+    max-width: 264px;
     margin: auto;
     text-align: center;
 }
@@ -27,12 +27,6 @@
     justify-content: center;
 }
 
-.intro-wrapper .title{
-    font-family: 'MergeBlack',sans-serif;
-    font-size: 45px;
-    text-transform: uppercase;
-    color: #fff;
-}
 
 .intro-wrapper .logo img{
     margin: 0 auto 15px auto;
@@ -46,15 +40,16 @@
 }
 
 .today_menu_content .intro_wrapper .title{
-    font-size: 45px;
+    font-size: 70px;
     text-transform: uppercase;
     color: #fff;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #fff;
 }
 
 .today_menu_content .intro_wrapper .description{
-    font-size: 15px;
+    font-size: 22px;
     color: #fff;
 }
 
@@ -136,8 +131,8 @@
 .main_menu_wrapper .quad_menu .quad .bottom_img_wrapper .btn_bottom{
     color: #000;
     background: #ffc522;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 20px;
+    font-size: 20px;
     box-shadow: none;
     border: none;
     border-radius: 10px;

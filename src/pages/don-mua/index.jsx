@@ -127,14 +127,14 @@ function PurchaseOrder() {
       </Head>
 
       <div
-        className={`p-4 md:p-6 lg:p-6`}
+        className={`p-4 md:p-6 lg:p-6 text-base md:text-xl lg:text-2xl`}
         style={{
           backgroundImage:
             "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
           backgroundSize: "cover",
         }}
       >
-        <h3 className="text-2xl font-bold text-center p-6">Đơn hàng của tôi</h3>
+        <h3 className="font-bold text-center p-6 text-5xl">Đơn hàng của tôi</h3>
         <div className="overflow-x-auto text-center">
           {orders && orders.length > 0 ? (
             <table className=" min-w-full border-2 border-gray-300">

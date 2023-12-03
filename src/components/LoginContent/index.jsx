@@ -58,8 +58,8 @@ function LoginContent() {
         backgroundSize: "cover",
       }}
     >
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Đăng nhập</h2>
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-base md:text-lg lg:text-2xl">
+        <h2 className="text-4xl font-semibold mb-6 text-center">Đăng nhập</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
           {/* <InputGroup
             label="Email"
@@ -76,7 +76,7 @@ function LoginContent() {
           /> */}
 
           <div>
-            <label className="block mb-1 text-gray-700">Email:</label>
+            <label className="block mb-1 text-gray-700 font-bold">Email:</label>
             <input
               type="email"
               placeholder="Vui lòng nhập email"
@@ -92,7 +92,7 @@ function LoginContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700">Mật khẩu:</label>
+            <label className="block mb-1 text-gray-700 font-bold">Mật khẩu:</label>
             <input
               type="password"
               placeholder="Vui lòng nhập mật khẩu"

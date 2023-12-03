@@ -45,15 +45,15 @@ function DropDownInfo({customer}) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
+        <Menu.Items className="absolute right-0 z-10 w-56 origin-top-right rounded-md bg-white ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1 text-base md:text-lg lg:text-xl">
             <Menu.Item>
               {({ active }) => (
                 <Link
                   href="/profile"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    'block px-4 py-2'
                   )}
                 >
                   Thông tin cá nhân
@@ -66,7 +66,7 @@ function DropDownInfo({customer}) {
                   href="/change-password"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    'block px-4 py-2'
                   )}
                 >
                   Thay đổi mật khẩu
@@ -79,7 +79,7 @@ function DropDownInfo({customer}) {
                   href="/don-mua"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    'block px-4 py-2'
                   )}
                 >
                   Đơn hàng của tôi
@@ -93,7 +93,7 @@ function DropDownInfo({customer}) {
                     type="submit"
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
+                      'block w-full px-4 py-2 text-left'
                     )}
                     onClick={handleLogout}
                     disabled={isButtonDisabled}

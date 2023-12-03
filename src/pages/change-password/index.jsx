@@ -126,10 +126,10 @@ function ChangePassword() {
       >
         <form
           onSubmit={validation.handleSubmit}
-          className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg"
+          className="max-w-xl w-3/4 mx-auto bg-white p-6 rounded-lg text-base md:text-lg lg:text-xl"
         >
           <div className="mb-4">
-            <label htmlFor="passwordOld" className="block font-medium mb-1">
+            <label htmlFor="passwordOld" className="block font-bold mb-1">
               Nhập mật khẩu cũ:
             </label>
             <input
@@ -151,7 +151,7 @@ function ChangePassword() {
           )}
 
           <div className="mb-4">
-            <label htmlFor="newPassword" className="block font-medium mb-1">
+            <label htmlFor="newPassword" className="block font-bold mb-1">
               Mật khẩu mới:
             </label>
             <input
@@ -173,7 +173,7 @@ function ChangePassword() {
           )}
 
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block font-medium mb-1">
+            <label htmlFor="confirmPassword" className="block font-bold mb-1">
               Nhập lại mật khẩu mới:
             </label>
             <input
