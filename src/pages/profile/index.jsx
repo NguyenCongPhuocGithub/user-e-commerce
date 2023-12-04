@@ -130,7 +130,7 @@ function Profile() {
     try {
       const url =
         "https://online-gateway.ghn.vn/shiip/public-api/master-data/province";
-      const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
+      const token = "5f0c9f5c-8471-11ee-96dc-de6f804954c9";
 
       const response = await axios.get(url, {
         headers: {
@@ -148,7 +148,7 @@ function Profile() {
     try {
       if (valuesProvinceCode && valuesProvinceCode !== 0 && valuesProvinceCode !== undefined) {
         const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${valuesProvinceCode}`;
-        const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
+        const token = "5f0c9f5c-8471-11ee-96dc-de6f804954c9";
 
         const response = await axios.get(url, {
           headers: {
@@ -166,7 +166,7 @@ function Profile() {
     try {
       if (valuesDistrictCode && valuesDistrictCode !== 0 && valuesDistrictCode !== undefined ) {
         const url = `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${valuesDistrictCode}`;
-        const token = "cfce17a8-6bfe-11ee-a59f-a260851ba65c";
+        const token = "5f0c9f5c-8471-11ee-96dc-de6f804954c9";
 
         const response = await axios.get(url, {
           headers: {

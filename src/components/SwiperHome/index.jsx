@@ -37,4 +37,4 @@ function SwiperHome() {
   );
 }
 
-export default SwiperHome;
+export default SwiperHome; 
