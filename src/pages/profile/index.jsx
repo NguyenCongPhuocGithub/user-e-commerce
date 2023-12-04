@@ -319,7 +319,7 @@ function Profile() {
                 />
               </label>
               {validation.errors.firstName && validation.touched.firstName && (
-                <div className="text-red-500 text-xs italic">
+                <div className="text-red-500 italic">
                   {validation.errors.firstName}
                 </div>
               )}
@@ -346,7 +346,7 @@ function Profile() {
                 />
               </label>
               {validation.errors.lastName && validation.touched.lastName && (
-                <div className="text-red-500 text-xs italic">
+                <div className="text-red-500 italic">
                   {validation.errors.lastName}
                 </div>
               )}
@@ -377,7 +377,7 @@ function Profile() {
             </label>
             {validation.errors.phoneNumber &&
               validation.touched.phoneNumber && (
-                <div className="text-red-500 text-xs italic">
+                <div className="text-red-500 italic">
                   {validation.errors.phoneNumber}
                 </div>
               )}
@@ -404,7 +404,7 @@ function Profile() {
               />
             </label>
             {validation.errors.birthday && validation.touched.birthday && (
-              <div className="text-red-500 text-xs italic">
+              <div className="text-red-500 italic">
                 {validation.errors.birthday}
               </div>
             )}
@@ -445,7 +445,7 @@ function Profile() {
             </label>
             {validation.errors.provinceCode &&
               validation.touched.provinceCode && (
-                <div className="text-red-500 text-xs italic">
+                <div className="text-red-500 italic">
                   {validation.errors.provinceCode}
                 </div>
               )}
@@ -486,7 +486,7 @@ function Profile() {
             </label>
             {validation.errors.districtCode &&
               validation.touched.districtCode && (
-                <div className="text-red-500 text-xs italic">
+                <div className="text-red-500 italic">
                   {validation.errors.districtCode}
                 </div>
               )}
@@ -521,7 +521,7 @@ function Profile() {
               </select>
             </label>
             {validation.errors.wardCode && validation.touched.wardCode && (
-              <div className="text-red-500 text-xs italic">
+              <div className="text-red-500 italic">
                 {validation.errors.wardCode}
               </div>
             )}
@@ -548,7 +548,7 @@ function Profile() {
               />
             </label>
             {validation.errors.address && validation.touched.address && (
-              <div className="text-red-500 text-xs italic">
+              <div className="text-red-500 italic">
                 {validation.errors.address}
               </div>
             )}
