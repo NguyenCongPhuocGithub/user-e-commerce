@@ -19,7 +19,7 @@ function RegisterContent() {
       email: "",
       phoneNumber: "",
       password: "",
-      birthday: "",
+      // birthday: "",
     },
 
     validationSchema: yup.object({
@@ -57,15 +57,15 @@ function RegisterContent() {
             /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
           return phoneRegex.test(value);
         }),
-        birthday: yup
-        .date()
-        .test("birthday type", "Ngày sinh không khả dụng", (value) => {
-          if (value) {
-            return value < Date.now();
-          }else{
-            return true;
-          }
-        }),
+        // birthday: yup
+        // .date()
+        // .test("birthday type", "Ngày sinh không khả dụng", (value) => {
+        //   if (value) {
+        //     return value < Date.now();
+        //   }else{
+        //     return true;
+        //   }
+        // }),
     }),
 
     onSubmit: async (values) => {
@@ -222,7 +222,7 @@ function RegisterContent() {
             )}
           </div>
 
-          <div>
+          {/* <div>
             <label className="block mb-1 text-gray-700 font-bold">Ngày sinh</label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
@@ -238,7 +238,7 @@ function RegisterContent() {
                 {validation.errors.birthday}
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="flex justify-center">
             <button

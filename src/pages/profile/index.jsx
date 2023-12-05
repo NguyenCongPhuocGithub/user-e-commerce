@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useCustomer from "@/hooks/useCustomer";
 import IsLoadingSmall from "@/components/IsLoadingSmall";
-import { data } from "autoprefixer";
 
 function Profile() {
   const router = useRouter();
@@ -59,7 +58,8 @@ function Profile() {
           return phoneRegex.test(value);
         }),
 
-      birthday: yup.date().required("Ngày sinh: vui lòng không bỏ trống")
+      birthday: yup.date()
+      .required("Ngày sinh: vui lòng không bỏ trống")
       .test("birthday type", "Ngày sinh không khả dụng", (value) => {
         if (value) {
           return value < Date.now();
@@ -107,7 +107,7 @@ function Profile() {
 
       wardName: yup.string().max(500, "wardName: cannot exceed 50 characters"),
 
-      address: yup.string().max(500, "address: cannot exceed 500 characters"),
+      address: yup.string().max(500, "address: cannot exceed 500 characters").required("Địa chỉ: vui lòng không bỏ trống"),
     }),
 
     onSubmit: useCallback(async (values) => {
@@ -185,7 +185,10 @@ function Profile() {
     try {
       const res = await axiosClient.get("/customers");
 
-      validation.setValues(res.data.payload);
+      validation.setValues((prev) => ({
+        ...prev,
+        ...res.data.payload,
+      }));
     } catch (error) {
       console.log("««««« error »»»»»", error);
     }
@@ -196,11 +199,6 @@ function Profile() {
 
   // Định dạng ngày theo chuẩn ISO 8601
   const formattedDate = birthday.format("YYYY-MM-DD");
-
-  useEffect(() => {
-    getMe();
-    getProvince();
-  }, []);
 
   useEffect(() => {
     getMe();
