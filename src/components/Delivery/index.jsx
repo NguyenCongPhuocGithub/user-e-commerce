@@ -16,9 +16,9 @@ function Delivery({customer, isLogin}) {
                 Pick up
             </div>
         </Link>
-
-        <Image width={100} height={30}src={"https://jollibee.com.vn/media/wysiwyg/delivery-lg-rs.png"} alt="Giao hàng nhanh jollibee" className='hidden md:hidden lg:flex'/>
-
+        <a href="tel:0326898018" className='hidden md:hidden lg:flex'>
+          <Image width={100} height={30}src={"https://jollibee.com.vn/media/wysiwyg/delivery-lg-rs.png"} alt="Giao hàng nhanh jollibee" />
+        </a>
         <div className={`${styles.delivery_register} flex md:flex lg:hidden`}>
               <MdAccountCircle size="2rem" />
               <ul className={styles.wrap_register}>
