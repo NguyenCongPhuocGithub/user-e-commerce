@@ -70,7 +70,7 @@ ul>li .nav_child .item_child:hover{
     }
 
     ul>li .nav_child .item_child{
-        flex-basis: calc(25% - 20px);
+        flex-basis: calc(33.333% - 20px);
     }
     
     ul>li .nav_child{
@@ -79,11 +79,6 @@ ul>li .nav_child .item_child:hover{
     }
  }
 
- @media screen and (max-width: 768px){
-    ul>li .nav_child .item_child{
-        flex-basis: calc(33.333% - 20px);
-    }
- }
 /* End build responsive */
 
 
