@@ -36,7 +36,7 @@
     .delivery_register ul {
         display: flex;
         column-gap: 5px;
-        font-size: 16px;
+        font-size: 24px;
         font-weight: bold;
     }
 

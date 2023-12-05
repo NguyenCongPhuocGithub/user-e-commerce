@@ -198,4 +198,11 @@
     }
   }
 
+    @media screen and (max-width: 375px) {
+
+    .main_menu_wrapper .quad_menu .quad .bottom_img_wrapper{
+        padding: 12px 4px;
+    }
+}
+
 /* End build responsive */

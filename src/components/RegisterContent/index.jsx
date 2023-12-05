@@ -96,7 +96,7 @@ function RegisterContent() {
       backgroundSize: "cover"
     }}
     >
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-base md:text-lg lg:text-2xl">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-lg md:text-lg lg:text-2xl">
         <h2 className="text-4xl font-semibold mb-6 text-center">Đăng ký</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
           {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

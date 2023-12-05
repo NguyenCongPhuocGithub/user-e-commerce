@@ -294,7 +294,7 @@ function Profile() {
       >
         <form
           onSubmit={validation.handleSubmit}
-          className="w-full max-w-sm px-4 bg-white p-6 rounded-lg text-base md:text-lg lg:text-xl"
+          className="w-full max-w-sm px-4 bg-white p-6 rounded-lg text-lg md:text-lg lg:text-xl"
         >
 
           <div className=" flex flex-col md:flex-row lg:flex-row md:gap-x-3 lg:gap-x-3">

@@ -72,7 +72,7 @@ function Header() {
           <div className="hidden md:hidden lg:flex">
             <NavigationBar/>
           </div>
-          <Delivery customer = {customer} isLogin = {isLogin}/>
+            <Delivery customer = {customer} isLogin = {isLogin}/>
         </div>
         {/* Build toggle */}
         {showNav && (
