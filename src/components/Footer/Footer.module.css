@@ -81,6 +81,23 @@
         align-items: flex-start;
     }
  }
+
+ @media screen and (min-width: 1441px){
+    .footer_text .address .info_address{
+        font-size: 26px;
+        line-height: 3rem;
+    }
+
+    .list_page{
+        font-size: 26px;
+        line-height: 3rem;
+    }
+
+    .footer_content .block_social a{
+        font-size: 26px;
+        line-height: 3rem;
+    }
+ }
 /* End build responsive */
 
 

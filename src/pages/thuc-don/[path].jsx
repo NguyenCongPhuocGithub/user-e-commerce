@@ -89,7 +89,7 @@ function ProductList(props) {
                   <BsCart4 size="3rem" />
                 </button>
                 <span
-                  className={`${styles.subtotal} flex justify-center items-start w-6 text-lg`}
+                  className={`${styles.subtotal} flex justify-center items-start w-6 text-2xl`}
                 >
                   {cart && cart.products && cart.products.length > 0 && (
                     <span
