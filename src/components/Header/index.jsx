@@ -20,9 +20,6 @@ function Header() {
   const customer = useCustomer((state) => state.customer);
   const setCustomer = useCustomer((state) => state.setCustomer);
 
-  console.log('««««« customer »»»»»', customer);
-
-
   //Thực hiện khi tham số query parameters thay đổi thực hiện thay đổi.
   useEffect(() => {
     setShowNav(false);
