@@ -20,6 +20,8 @@ function Header() {
   const customer = useCustomer((state) => state.customer);
   const setCustomer = useCustomer((state) => state.setCustomer);
 
+  console.log('««««« customer »»»»»', customer);
+
 
   //Thực hiện khi tham số query parameters thay đổi thực hiện thay đổi.
   useEffect(() => {
@@ -35,7 +37,7 @@ function Header() {
     try {
       if(isLogin === true){
         const res = await axiosClient.get("/customers");
-        setCustomer(res.data?.payload || {});
+        setCustomer(res.data?.payload || []);
       }
     } catch (error) {
       console.log("««««« error »»»»»", error);

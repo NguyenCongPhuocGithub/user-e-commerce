@@ -5,6 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import IsLoadingSmall from '../IsLoadingSmall'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -31,7 +32,7 @@ function DropDownInfo({customer}) {
     <Menu as="div" className="relative inline-block text-left text-2xl">
       <div>
         <Menu.Button className="inline-flex w-full justify-center items-center gap-x-1.5 rounded-md px-3 py-2 font-semibold  ">
-          {`${customer.firstName} ${customer.lastName}`}
+          {customer.firstName && customer.lastName ? `${customer.firstName} ${customer.lastName}` : <IsLoadingSmall/> }
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
         </Menu.Button>
       </div>

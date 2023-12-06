@@ -40,7 +40,7 @@ function NavigationBar() {
   const resultsNavList = navList.map((item) => {
     if (item.id === 3) {
       return {
-        ...item,
+        ...item, 
         child: categoriesConvert,
       };
     }
