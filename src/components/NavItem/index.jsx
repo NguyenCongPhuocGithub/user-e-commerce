@@ -10,7 +10,9 @@ function NavItem({ categories, showCategories, setShowCategories }) {
     const currentPath = router.pathname;
 
     const handleShowCategories = () => {
-      setShowCategories(!showCategories);
+      if (window.innerWidth <= 1025){
+        setShowCategories(!showCategories);
+      }
     };
 
     //Thực hiện thay đổi path sẽ setShowCategories === false, thuộc tính lấy query parameters
@@ -19,27 +21,48 @@ function NavItem({ categories, showCategories, setShowCategories }) {
     }, [router.asPath]);
     
     return (
-      <li onClick={categories.id === 3 ? handleShowCategories : null}>
-     <Link className={(currentPath === categories.path) || (currentPath.includes('/thuc-don/') && categories.path.includes('/thuc-don/')) ? styles.current : ''} href={categories.path}>
-          {categories.label}
-      </Link> 
-        {categories.child && categories.child.length > 0 && showCategories ? (
-          <div className={styles.nav_child}> 
-            {categories.child.map((child) => {
-              return (
-                <Link key={`NavItem_${child.id}`} href={`/thuc-don/${child.path}`} className = {styles.item_child}>
-                  <div className={styles.nav_child_item}>
-                    <div>
-                    <Image width={80} height={50} src={child.media.coverImageUrl} alt="Gà cay thơm ngon" />
-                    </div>
-                    <div>{child.name}</div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        ) : null}
-      </li>
+    //  <li onClick={categories.id === 3 ? handleShowCategories : null}>
+    //  <Link className={(currentPath === categories.path) || (currentPath.includes('/thuc-don/') && categories.path.includes('/thuc-don/')) ? styles.current : ''} href={categories.path}>
+    //       {categories.label}
+    //   </Link> 
+    //     {categories.child && categories.child.length > 0 && showCategories ? (
+    //       <div className={styles.nav_child}> 
+    //         {categories.child.map((child) => {
+    //           return (
+    //             <Link key={`NavItem_${child.id}`} href={`/thuc-don/${child.path}`} className = {styles.item_child}>
+    //               <div className={styles.nav_child_item}>
+    //                 <div>
+    //                 <Image width={80} height={50} src={child.media.coverImageUrl} alt="Gà cay thơm ngon" />
+    //                 </div>
+    //                 <div>{child.name}</div>
+    //               </div>
+    //             </Link>
+    //           );
+    //         })}
+    //       </div>
+    //     ) : null}
+    //   </li>
+
+
+    <li onClick={categories.id === 3 ? handleShowCategories : null}>
+    <Link className={(currentPath === categories.path) || (currentPath.includes('/thuc-don/') && categories.path.includes('/thuc-don/')) ? styles.current : ''} href={categories.path}>
+      {categories.label}
+    </Link>
+    {categories.child && categories.child.length > 0 && (
+      <div className={`${styles.nav_child} ${showCategories ? styles.showChild : ''}`}>
+        {categories.child.map((child) => (
+          <Link key={`NavItem_${child.id}`} href={`/thuc-don/${child.path}`} className={styles.item_child}>
+            <div className={styles.nav_child_item}>
+              <div>
+                <Image width={80} height={50} src={child.media.coverImageUrl} alt="Gà cay thơm ngon" />
+              </div>
+              <div>{child.name}</div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    )}
+  </li>
     );
   }
   

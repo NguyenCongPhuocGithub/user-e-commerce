@@ -9,6 +9,7 @@ import { IoMenu } from "react-icons/io5";
 import PanelHeader from "../PanelHeader";
 import axiosClient from "@/libraries/axiosClient";
 import useCustomer from "@/hooks/useCustomer";
+import { use } from "passport";
 
 
 
@@ -26,7 +27,7 @@ function Header() {
   }, [router.asPath]);
 
   const handleShowNav = () => {
-    setShowNav(!showNav);
+      setShowNav(!showNav);
   };
 
   //Chỉ gọi khi đăng nhập vào
@@ -52,8 +53,23 @@ function Header() {
       //  isLogin === true set client sử dụng token
       // sử dụng !! sử dụng hai lần phủ định - sự thay đổi của token
       setIsLogin(!!token);
+     
     }
   });
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth >= 1025) {
+        setShowNav(false);
+      }
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   return (
     <header className={styles.page_header}>
