@@ -9,9 +9,6 @@ import { IoMenu } from "react-icons/io5";
 import PanelHeader from "../PanelHeader";
 import axiosClient from "@/libraries/axiosClient";
 import useCustomer from "@/hooks/useCustomer";
-import { use } from "passport";
-
-
 
 function Header() {
   const router = useRouter();
