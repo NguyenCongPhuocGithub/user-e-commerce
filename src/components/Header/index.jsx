@@ -16,6 +16,7 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [showNav, setShowNav] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   // const [customer, setCustomer] = useState({});
   const customer = useCustomer((state) => state.customer);
   const setCustomer = useCustomer((state) => state.setCustomer);

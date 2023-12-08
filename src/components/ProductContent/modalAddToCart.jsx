@@ -62,7 +62,7 @@ function ModalAddToCart({ open, setOpen, products, getCart }) {
         }));
 
         setOpen(false);
-        getCart();
+        await getCart();
         toast.success("Thêm giỏ hàng thành công");
       } else {
         toast.warning("Vui lòng số lượng");

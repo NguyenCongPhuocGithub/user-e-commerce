@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import slugify from "slugify";
 
 import NavItem from "../NavItem";
@@ -11,6 +11,7 @@ import React from "react";
 function NavigationBar() {
   const [categories, setCategories] = useState([]);
   const [showCategories, setShowCategories] = useState(false);
+  const isInitialMount = useRef(true);
 
   const getCategories = useCallback(async () => {
     try {
@@ -48,7 +49,13 @@ function NavigationBar() {
   });
 
   useEffect(() => {
-    getCategories();
+    if (isInitialMount.current) {
+      // Nếu là lần mount đầu tiên, đặt isInitialMount thành false
+      isInitialMount.current = false;
+    } else {
+      // Nếu không phải lần mount đầu tiên, thực hiện gọi API
+      getCategories();
+    }
   }, [getCategories]);
 
   return (
