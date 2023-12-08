@@ -22,7 +22,8 @@ ul>li:hover .nav_child{
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 999;
     top: 98.2px;
-    left: 0;
+    left: 7%;
+    right: 7%;
     border-radius: 0 0 10px 10px;
     flex-wrap: wrap;
     font-weight: bold;
@@ -44,7 +45,7 @@ ul>li .nav_child .item_child:hover {
 
 /* Build responsive */
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 1023px) {
     .current {
         border-radius: 10px;
     }
@@ -66,6 +67,7 @@ ul>li .nav_child .item_child:hover {
         z-index: 999;
         top: 0;
         left: 0;
+        right: 0;
         border-radius: 0 0 10px 10px;
         flex-wrap: wrap;
         font-weight: bold;
