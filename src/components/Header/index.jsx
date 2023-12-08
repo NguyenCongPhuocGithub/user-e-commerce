@@ -10,10 +10,12 @@ import PanelHeader from "../PanelHeader";
 import axiosClient from "@/libraries/axiosClient";
 import useCustomer from "@/hooks/useCustomer";
 
+
 function Header() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [showNav, setShowNav] = useState(false);
+  const [isFixed, setIsFixed] = useState(false);
   // const [customer, setCustomer] = useState({});
   const customer = useCustomer((state) => state.customer);
   const setCustomer = useCustomer((state) => state.setCustomer);
@@ -54,6 +56,7 @@ function Header() {
     }
   });
 
+  //Chỉnh tắt navBar toggle với màn hình lg
   useEffect(() => {
     const handleWindowResize = () => {
       if (window.innerWidth >= 1025) {
@@ -68,8 +71,25 @@ function Header() {
     };
   }, []);
 
+  //Chỉnh fixed header khi scrolly >= 110
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 110) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className={styles.page_header}>
+    <header className={`${styles.page_header} ${isFixed ? styles.fixed_header : ''}`}>
       <PanelHeader customer = {customer} isLogin = {isLogin}/>
       
       <div className="container mx-auto">
