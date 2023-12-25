@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallBack, useEffect, useCallback } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -11,6 +11,7 @@ import IsLoadingSmall from "../IsLoadingSmall";
 function RegisterContent() {
   const router = useRouter();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [openVerificationCode, setOpenVerificationCode] = useState(false);
 
   const validation = useFormik({
     initialValues: {
@@ -19,7 +20,7 @@ function RegisterContent() {
       email: "",
       phoneNumber: "",
       password: "",
-      // birthday: "",
+      confirmVerificationCode: "",
     },
 
     validationSchema: yup.object({
@@ -57,30 +58,57 @@ function RegisterContent() {
             /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
           return phoneRegex.test(value);
         }),
-        // birthday: yup
-        // .date()
-        // .test("birthday type", "Ngày sinh không khả dụng", (value) => {
-        //   if (value) {
-        //     return value < Date.now();
-        //   }else{
-        //     return true;
-        //   }
-        // }),
+
+        confirmVerificationCode: yup .string(),
     }),
 
     onSubmit: async (values) => {
       try {
         setIsButtonDisabled(true);
+
+        if(openVerificationCode && !values.confirmVerificationCode){
+          toast.warning("Vui lòng nhập mã xác thực");
+          setIsButtonDisabled(false);
+          return;
+        }
+
+        // Xử lý với việc truyền mã xác thực mail
+        const valuesGetVerifiCode = {
+          email: values.email,
+          phoneNumber: values.phoneNumber,
+          confirmVerificationCode: values.confirmVerificationCode,
+          typeAPI: "Register"
+        };
+
+        const getVerificode = await axiosClient.post(
+          "/verifications/verificationMail",
+          valuesGetVerifiCode
+        );
+    
+        if (getVerificode.status === 201) {
+          toast.success("Vui lòng truy cập gmail lấy mã xác thực");
+          setOpenVerificationCode(true);
+          setIsButtonDisabled(false);
+          return;
+        }
+
         await axiosClient.post("/auth/register", values);
         router.push("/");
         toast.success("Đăng ký thành công");
       } catch (error) {
-        console.error(error);
         setIsButtonDisabled(false);
         if (error.response) {
           // Lỗi trả về từ API
           const errorMessage = error.response.data.error;
           toast.error(errorMessage);
+          if(error.response.data.expirationTime){
+            // set confirmVerificationCode bằng rỗng để thực hiện truyền dữ gọi lại API lấy mã
+            validation.setValues((prev) => ({
+              ...prev,
+              confirmVerificationCode : "",
+            }));
+            setOpenVerificationCode(false);
+          }
         } else {
           toast.error("Đăng ký thông tin thất bại");
         }
@@ -89,49 +117,17 @@ function RegisterContent() {
   });
 
   return (
-    <div 
-    className="flex justify-center items-center bg-gray-100 p-10"
-    style={{
-      backgroundImage: "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
-      backgroundSize: "cover"
-    }}
+    <div
+      className="flex justify-center items-center bg-gray-100 p-10"
+      style={{
+        backgroundImage:
+          "url('https://jollibee.com.vn/static/version1698938216/frontend/Jollibee/default/vi_VN/Levinci_Widget/images/jollibee-kid-party-bg.png')",
+        backgroundSize: "cover",
+      }}
     >
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-lg md:text-lg lg:text-2xl">
         <h2 className="text-4xl font-semibold mb-6 text-center">Đăng ký</h2>
         <form onSubmit={validation.handleSubmit} className="space-y-4">
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <InputGroup label="Họ" name="firstName" validation={validation} />
-
-            <InputGroup label="Tên" name="lastName" validation={validation} />
-          </div> */}
-
-          {/* <InputGroup
-            label="Email"
-            type="email"
-            name="email"
-            validation={validation}
-          />
-
-          <InputGroup
-            label="Số điện thoại"
-            name="phoneNumber"
-            validation={validation}
-          />
-
-          <InputGroup
-            label="Mật khẩu"
-            type="password"
-            name="password"
-            validation={validation}
-          />
-
-          <InputGroup
-            label="Ngày sinh"
-            name="birthday"
-            type="date"
-            validation={validation}
-          /> */}
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block mb-1 text-gray-700 font-bold">Họ</label>
@@ -187,7 +183,9 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700 font-bold">Mật khẩu</label>
+            <label className="block mb-1 text-gray-700 font-bold">
+              Mật khẩu
+            </label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="password"
@@ -205,7 +203,9 @@ function RegisterContent() {
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700 font-bold">Số điện thoại</label>
+            <label className="block mb-1 text-gray-700 font-bold">
+              Số điện thoại
+            </label>
             <input
               className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
               type="text"
@@ -215,30 +215,36 @@ function RegisterContent() {
               onChange={validation.handleChange}
               onBlur={validation.handleBlur}
             />
-            {validation.errors.phoneNumber && validation.touched.phoneNumber && (
-              <div className="text-red-500 mt-1">
-                {validation.errors.phoneNumber}
-              </div>
-            )}
+            {validation.errors.phoneNumber &&
+              validation.touched.phoneNumber && (
+                <div className="text-red-500 mt-1">
+                  {validation.errors.phoneNumber}
+                </div>
+              )}
           </div>
 
-          {/* <div>
-            <label className="block mb-1 text-gray-700 font-bold">Ngày sinh</label>
-            <input
-              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
-              type="date"
-              placeholder="Vui lòng nhập số ngày sinh"
-              name="birthday"
-              value={validation.values.birthday}
-              onChange={validation.handleChange}
-              onBlur={validation.handleBlur}
-            />
-            {validation.errors.birthday && validation.touched.birthday && (
-              <div className="text-red-500 mt-1">
-                {validation.errors.birthday}
-              </div>
-            )}
-          </div> */}
+          {openVerificationCode ? (
+            <div>
+              <label className="block mb-1 text-gray-700 font-bold">
+                Mã xác thực gmail
+              </label>
+              <input
+                className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500 text-gray-700"
+                type="text"
+                placeholder="Vui lòng nhập mã xác thực"
+                name="confirmVerificationCode"
+                value={validation.values.confirmVerificationCode}
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+              />
+              {validation.errors.confirmVerificationCode &&
+                validation.touched.confirmVerificationCode && (
+                  <div className="text-red-500 mt-1">
+                    {validation.errors.confirmVerificationCode}
+                  </div>
+                )}
+            </div>
+          ) : null}
 
           <div className="flex justify-center">
             <button
@@ -246,14 +252,18 @@ function RegisterContent() {
               className="bg-red-600 hover:bg-red-400 text-white rounded-lg py-2 px-4 w-full"
               disabled={isButtonDisabled}
             >
-            {isButtonDisabled ? (
-              <div className={`flex justify-center items-center gap-2`}>
-                <IsLoadingSmall />
+              {isButtonDisabled ? (
+                <div className={`flex justify-center items-center gap-2`}>
+                  <IsLoadingSmall />
+                  {!validation.confirmVerificationCode && !openVerificationCode ? (
+                    <p>Gửi mã xác thực Email</p>
+                  ) : (
+                    <p>Đăng ký</p>
+                  )}
+                </div>
+              ) : (
                 <p>Đăng ký</p>
-              </div>
-            ) : (
-              <p>Đăng ký</p>
-            )}
+              )}
             </button>
           </div>
         </form>

@@ -130,6 +130,12 @@ function LoginContent() {
               tại đây
             </Link>
           </div>
+          <div className="flex justify-center gap-x-1">
+            <p>Quên mật khẩu</p>
+            <Link href="/forgot-password" className="text-blue-500">
+              tại đây
+            </Link>
+          </div>
         </form>
       </div>
     </div>
