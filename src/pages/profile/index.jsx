@@ -252,7 +252,7 @@ function Profile() {
     } else {
       validation.setValues((prev) => ({
         ...prev,
-        districtCode: selectedDistrict ? selectedDistrict.DistrictID: 0,
+        districtCode: selectedDistrict ? selectedDistrict.DistrictID : 0,
         districtName: selectedDistrict ? selectedDistrict.DistrictName : "",
         wardCode: "",
         wardName: "",

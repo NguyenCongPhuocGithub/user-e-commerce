@@ -14,6 +14,7 @@ function RegisterContent() {
   const [openVerificationCode, setOpenVerificationCode] = useState(false);
 
   const validation = useFormik({
+    
     initialValues: {
       firstName: "",
       lastName: "",

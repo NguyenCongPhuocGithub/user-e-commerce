@@ -78,7 +78,7 @@ function ForgotPasswordContent() {
             }));
           }
         } else {
-          toast.error("Đăng ký thông tin thất bại");
+          toast.error("Xác thực mail thất bại");
         }
       }
     },

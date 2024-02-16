@@ -47,7 +47,6 @@ function PurchaseOrder() {
 
   const getOrderMe = useCallback(async () => {
     try {
-      console.log('««««« pagination »»»»»', pagination);
       const response = await axiosClient.get(
         `/orders?page=${pagination.page}&pageSize=${pagination.pageSize}`
       );
