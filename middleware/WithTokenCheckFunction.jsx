@@ -58,11 +58,10 @@ const withTokenCheckFunction = (func, redirectPage) => {
           axiosClient.defaults.headers.Authorization = `Bearer ${token}`;
         }
       }
-
+      
       useEffect(() => {
         checkAndRefreshToken();
       }, [redirectPage]);
-
     };
 
     // Thực hiện hàm được bọc nếu có token
