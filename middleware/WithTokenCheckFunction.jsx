@@ -1,11 +1,13 @@
 import axiosClient from "@/libraries/axiosClient";
-import { useRouter, useEffect } from "next/router";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import decodeToken from "@/libraries/tokenDecoding";
 
 const withTokenCheckFunction = (func, redirectPage) => {
+  const router = useRouter();
+
   return async (...args) => {
-    const router = useRouter();
     const checkAndRefreshToken = async () => {
       const token = localStorage.getItem("TOKEN");
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");
@@ -56,11 +58,12 @@ const withTokenCheckFunction = (func, redirectPage) => {
           axiosClient.defaults.headers.Authorization = `Bearer ${token}`;
         }
       }
-    };
 
-    useEffect(() => {
-      checkAndRefreshToken();
-    }, [redirectPage]);
+      useEffect(() => {
+        checkAndRefreshToken();
+      }, [redirectPage]);
+
+    };
 
     // Thực hiện hàm được bọc nếu có token
     return await func(...args);

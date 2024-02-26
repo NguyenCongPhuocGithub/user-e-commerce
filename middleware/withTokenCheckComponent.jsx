@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 import decodeToken from "@/libraries/tokenDecoding";
 
 const withTokenCheckComponent = (WrappedComponent, redirectPage) => {
+  const router = useRouter();
+  
   return (props) => {
-    const router = useRouter();
     const checkAndRefreshToken = async () => {
       const token = localStorage.getItem("TOKEN");
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");
