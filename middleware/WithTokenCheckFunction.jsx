@@ -6,9 +6,9 @@ import decodeToken from "@/libraries/tokenDecoding";
 
 const withTokenCheckFunction = (func, redirectPage) => {
 
+  const router = useRouter();
+
   return async (...args) => {
-    const router = useRouter();
-    
     const checkAndRefreshToken = async () => {
       const token = localStorage.getItem("TOKEN");
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");
