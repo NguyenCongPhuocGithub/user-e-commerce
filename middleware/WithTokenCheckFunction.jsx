@@ -5,14 +5,13 @@ import { toast } from "react-toastify";
 import decodeToken from "@/libraries/tokenDecoding";
 
 const withTokenCheckFunction = (func, redirectPage) => {
-
   const router = useRouter();
 
   return async (...args) => {
     const checkAndRefreshToken = async () => {
       const token = localStorage.getItem("TOKEN");
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");
-
+      
       if (!token) {
         if (redirectPage) {
           router.push(redirectPage);
@@ -38,7 +37,7 @@ const withTokenCheckFunction = (func, redirectPage) => {
               const res = await axiosClient.post("/auth/refresh-token", {
                 refreshToken,
               });
-
+  
               const newToken = res.data.token;
               localStorage.setItem("TOKEN", newToken);
               axiosClient.defaults.headers.Authorization = `Bearer ${newToken}`;
@@ -59,11 +58,9 @@ const withTokenCheckFunction = (func, redirectPage) => {
           axiosClient.defaults.headers.Authorization = `Bearer ${token}`;
         }
       }
-      
-      useEffect(() => {
-        checkAndRefreshToken();
-      }, [redirectPage]);
     };
+
+      checkAndRefreshToken();
 
     // Thực hiện hàm được bọc nếu có token
     return await func(...args);
