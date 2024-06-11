@@ -38,7 +38,7 @@ function NavigationBar() {
   }));
 
   const resultsNavList = navList.map((item) => {
-    if (item.id === 3) {
+    if (item.id === 2) {
       return {
         ...item, 
         child: categoriesConvert,
